@@ -29,6 +29,6 @@
     <fragment
         android:id="@+id/addCustomHabitFragment"
         android:name="org.othr.habithunter.ui.addCustomHabit.AddCustomHabitFragment"
-        android:label="fragment_add_custom_habit"
+        android:label="@string/title_add_custom_habit"
         tools:layout="@layout/fragment_add_custom_habit" />
 </navigation>
