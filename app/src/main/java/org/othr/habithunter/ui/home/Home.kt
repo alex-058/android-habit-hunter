@@ -1,12 +1,14 @@
-package org.othr.habithunter
+package org.othr.habithunter.ui.home
 
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import org.othr.habithunter.R
 import org.othr.habithunter.databinding.ActivityHomeBinding
 
 class Home : AppCompatActivity() {
@@ -31,6 +33,16 @@ class Home : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        // Trigger fullscreen support for: addCustomHabit Fragment
+        navController.addOnDestinationChangedListener {
+                _, destination, _ ->
+            if (destination.id == R.id.addCustomHabitFragment) {
+                navView.visibility = View.GONE
+            } else {
+                navView.visibility = View.VISIBLE
+            }
+        }
 
 
     }
