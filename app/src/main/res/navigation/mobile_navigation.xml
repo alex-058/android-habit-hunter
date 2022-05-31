@@ -15,11 +15,20 @@
         android:id="@+id/navigation_dashboard"
         android:name="org.othr.habithunter.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_addCustomHabitFragment"
+            app:destination="@id/addCustomHabitFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="org.othr.habithunter.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/addCustomHabitFragment"
+        android:name="org.othr.habithunter.ui.addCustomHabit.AddCustomHabitFragment"
+        android:label="fragment_add_custom_habit"
+        tools:layout="@layout/fragment_add_custom_habit" />
 </navigation>

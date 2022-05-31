@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import org.othr.habithunter.R
 import org.othr.habithunter.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
@@ -28,6 +30,10 @@ class DashboardFragment : Fragment() {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        binding.floatingActionButton.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_dashboard_to_addCustomHabitFragment)
+        }
+
         val textView: TextView = binding.textDashboard
         dashboardViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
@@ -40,3 +46,4 @@ class DashboardFragment : Fragment() {
         _binding = null
     }
 }
+
