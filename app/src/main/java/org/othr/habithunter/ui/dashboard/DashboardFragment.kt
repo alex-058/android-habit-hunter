@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -79,7 +80,9 @@ class DashboardFragment : Fragment(), HabitClickListener {
     }
 
     override fun onHabitClick(habit: HabitModel) {
-        TODO("Not yet implemented")
+        // event handling for clicking a habit in recycler view
+        Toast.makeText(activity, "You just clicked the habit: " + habit.habitTitle, Toast.LENGTH_LONG)
+            .show()
     }
 }
 

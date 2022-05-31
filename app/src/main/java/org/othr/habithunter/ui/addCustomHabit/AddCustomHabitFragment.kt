@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import org.othr.habithunter.R
 import org.othr.habithunter.databinding.FragmentAddCustomHabitBinding
 import org.othr.habithunter.models.HabitModel
@@ -30,8 +31,8 @@ class AddCustomHabitFragment : Fragment() {
         val addCustomHabitViewModel =
             ViewModelProvider(this).get(AddCustomHabitViewModel::class.java)
 
-        addCustomHabitViewModel.observableStatus.observe(viewLifecycleOwner, Observer {
-                status -> status?.let { render(status) }
+        addCustomHabitViewModel.observableStatus.observe(viewLifecycleOwner, Observer { status ->
+            status?.let { render(status) }
         })
 
         _binding = FragmentAddCustomHabitBinding.inflate(inflater, container, false)
@@ -47,10 +48,16 @@ class AddCustomHabitFragment : Fragment() {
 
         // Button behaviour
         binding.addCustomHabitBttn.setOnClickListener {
-            Toast.makeText(activity, "You pressed the Add habit button", Toast.LENGTH_LONG)
-                .show()
-            // operation on view model
-            addCustomHabitViewModel.addHabit(HabitModel(habitTitle = binding.textHabitName.toString()))
+
+            if (binding.textHabitName.text?.isNotEmpty()!!) {
+                // operation on view model
+                addCustomHabitViewModel.addHabit(HabitModel(habitTitle = binding.textHabitName.text.toString()))
+            } else {
+                Snackbar
+                    .make(it, R.string.message_enterAllFields, Snackbar.LENGTH_LONG)
+                    .show()
+            }
+
             findNavController().navigateUp() // go immediately back
         }
 
@@ -71,7 +78,7 @@ class AddCustomHabitFragment : Fragment() {
         })
 
         // Time Options Picker setup
-        binding.numberPickerTime.displayedValues= resources.getStringArray(R.array.timeOptions)
+        binding.numberPickerTime.displayedValues = resources.getStringArray(R.array.timeOptions)
         binding.numberPickerTime.maxValue = resources.getStringArray(R.array.timeOptions).size - 1
 
         binding.amountTimeRadioGroup.setOnCheckedChangeListener { radioGroup, optionId ->
@@ -109,7 +116,11 @@ class AddCustomHabitFragment : Fragment() {
                     //findNavController().popBackStack()
                 }
             }
-            false -> Toast.makeText(context,getString(R.string.habitErrorMessage),Toast.LENGTH_LONG).show()
+            false -> Toast.makeText(
+                context,
+                getString(R.string.habitErrorMessage),
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 

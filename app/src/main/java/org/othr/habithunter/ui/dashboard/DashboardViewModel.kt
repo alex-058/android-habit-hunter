@@ -18,6 +18,6 @@ class DashboardViewModel : ViewModel() {
     init { load() }
 
     fun load() {
-        habitList.value = HabitManager.findAll() // get data
+        habitList.value = HabitManager.getHabits() // get data from storage
     }
 }

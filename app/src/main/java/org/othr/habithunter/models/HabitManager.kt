@@ -8,7 +8,7 @@ object HabitManager : IHabitCrud {
         habits.add(habit)
     }
 
-    override fun findAll(): ArrayList<HabitModel> {
+    override fun getHabits(): ArrayList<HabitModel> {
         return habits
     }
 

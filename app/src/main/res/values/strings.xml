@@ -18,6 +18,7 @@
     <string name="text_radio_button_amount">Amount</string>
     <string name="text_radio_button_time">Time</string>
     <string name="title_add_custom_habit">Add your habit</string>
+    <string name="message_enterAllFields">Please enter / select all fields</string>
 
     <string-array name="timeOptions">
         <item>seconds</item>

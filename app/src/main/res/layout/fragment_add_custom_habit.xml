@@ -9,7 +9,7 @@
     android:focusableInTouchMode="true">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textHabitName"
+        android:id="@+id/fieldHabitName"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,6 +25,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textHabitName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
@@ -85,7 +86,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.29"
         app:layout_constraintStart_toStartOf="@id/profile_image"
-        app:layout_constraintTop_toBottomOf="@id/textHabitName"
+        app:layout_constraintTop_toBottomOf="@id/fieldHabitName"
         app:layout_constraintVertical_bias="0.100000024" />
 
     <View
@@ -196,7 +197,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textHabitName"
+        app:layout_constraintTop_toBottomOf="@id/fieldHabitName"
         app:layout_constraintVertical_bias="0.060000002" />
 
     <NumberPicker
