@@ -6,27 +6,84 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.NumberPicker
+import android.widget.Toast
+import androidx.core.view.isVisible
 import org.othr.habithunter.R
+import org.othr.habithunter.databinding.FragmentAddCustomHabitBinding
 
 class AddCustomHabitFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = AddCustomHabitFragment()
-    }
-
-    private lateinit var viewModel: AddCustomHabitViewModel
+    // binding support
+    private var _binding: FragmentAddCustomHabitBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_add_custom_habit, container, false)
+        _binding = FragmentAddCustomHabitBinding.inflate(inflater, container, false)
+        val root = binding.root
+
+        activity?.actionBar?.title = "Add custom habit"
+
+        // Icon behaviour
+        binding.profileImage.setOnClickListener {
+            Toast.makeText(activity, "Please select an image", Toast.LENGTH_LONG)
+                .show()
+        }
+
+        // Button behaviour
+        binding.addCustomHabitBttn.setOnClickListener {
+            Toast.makeText(activity, "You pressed the Add habit button", Toast.LENGTH_LONG)
+                .show()
+        }
+
+        // Dealing with keyboard focus -> does not work yet
+        /*binding.textHabitName.setOnFocusChangeListener(OnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                hideSoftKeyboard(v)
+            }
+        }) */
+
+        // Amount Number Picker setup
+        binding.numberPickerAmount.minValue
+        binding.numberPickerAmount.maxValue = 60;
+
+
+        binding.numberPickerAmount.setOnValueChangedListener(NumberPicker.OnValueChangeListener { picker, oldVal, newVal ->
+
+        })
+
+        // Time Options Picker setup
+        binding.numberPickerTime.displayedValues= resources.getStringArray(R.array.timeOptions)
+        binding.numberPickerTime.maxValue = resources.getStringArray(R.array.timeOptions).size - 1
+
+        binding.amountTimeRadioGroup.setOnCheckedChangeListener { radioGroup, optionId ->
+            run {
+                when (optionId) {
+                    R.id.radioButtonTime -> {
+                        // do something when radio button 1 is selected
+                        binding.numberPickerTime.isVisible = true
+                    }
+                    R.id.radioButtonAmount -> {
+                        binding.numberPickerTime.isVisible = false
+                    }
+                }
+            }
+        }
+
+
+        return root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AddCustomHabitViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
 }
