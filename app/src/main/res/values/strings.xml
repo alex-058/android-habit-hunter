@@ -4,6 +4,8 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_profile">Profile</string>
 
+    <string name="habitErrorMessage">Error while adding the habit</string>
+
     <!-- String resources for custom habit layout file -->
     <string name="enter_name_of_habit">Enter name of habit</string>
     <string name="add_habit">Add habit</string>

@@ -9,8 +9,12 @@ import android.view.ViewGroup
 import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import org.othr.habithunter.R
 import org.othr.habithunter.databinding.FragmentAddCustomHabitBinding
+import org.othr.habithunter.models.HabitModel
+import org.othr.habithunter.ui.dashboard.DashboardViewModel
 
 class AddCustomHabitFragment : Fragment() {
 
@@ -22,6 +26,14 @@ class AddCustomHabitFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val addCustomHabitViewModel =
+            ViewModelProvider(this).get(AddCustomHabitViewModel::class.java)
+
+        addCustomHabitViewModel.observableStatus.observe(viewLifecycleOwner, Observer {
+                status -> status?.let { render(status) }
+        })
+
         _binding = FragmentAddCustomHabitBinding.inflate(inflater, container, false)
         val root = binding.root
 
@@ -37,6 +49,9 @@ class AddCustomHabitFragment : Fragment() {
         binding.addCustomHabitBttn.setOnClickListener {
             Toast.makeText(activity, "You pressed the Add habit button", Toast.LENGTH_LONG)
                 .show()
+            // operation on view model
+            addCustomHabitViewModel.addHabit(HabitModel(habitTitle = binding.textHabitName.toString()))
+            findNavController().navigateUp() // go immediately back
         }
 
         // Dealing with keyboard focus -> does not work yet
@@ -84,6 +99,18 @@ class AddCustomHabitFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+    }
+
+    private fun render(status: Boolean) {
+        when (status) {
+            true -> {
+                view?.let {
+                    //Uncomment this if you want to immediately return to Report
+                    //findNavController().popBackStack()
+                }
+            }
+            false -> Toast.makeText(context,getString(R.string.habitErrorMessage),Toast.LENGTH_LONG).show()
+        }
     }
 
 }
