@@ -31,4 +31,9 @@
         android:name="org.othr.habithunter.ui.addCustomHabit.AddCustomHabitFragment"
         android:label="@string/title_add_custom_habit"
         tools:layout="@layout/fragment_add_custom_habit" />
+    <fragment
+        android:id="@+id/inputProgressHabit"
+        android:name="org.othr.habithunter.ui.inputProgressHabit.inputProgressHabit"
+        android:label="fragment_input_progress_habit"
+        tools:layout="@layout/fragment_input_progress_habit" />
 </navigation>
