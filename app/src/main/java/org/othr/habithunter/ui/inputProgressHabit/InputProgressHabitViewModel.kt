@@ -26,7 +26,7 @@ class InputProgressHabitViewModel : ViewModel() {
         habit.value?.habitProgress = habit.value?.habitProgress!! - n
     }
 
-    // TODO: Retrieving viewModel "attributes" should not be needed with two-way data binding
+    // TODO: Retrieving viewModel "attributes" should not be needed with data binding -> can be referenced directly in xml
     fun getGoalAmount () : Int {
         return habit.value!!.habitGoal
     }
