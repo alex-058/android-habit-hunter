@@ -81,8 +81,12 @@ class DashboardFragment : Fragment(), HabitClickListener {
 
     override fun onHabitClick(habit: HabitModel) {
         // event handling for clicking a habit in recycler view
-        Toast.makeText(activity, "You just clicked the habit: " + habit.habitTitle, Toast.LENGTH_LONG)
-            .show()
+        // Toast.makeText(activity, "You just clicked the habit: " + habit.habitTitle + habit.habitId, Toast.LENGTH_LONG)
+        // .show()
+        // findNavController().navigate(R.id.action_navigation_dashboard_to_inputProgressHabit)
+
+        val action = DashboardFragmentDirections.actionNavigationDashboardToInputProgressHabit(habit.habitId)
+        findNavController().navigate(action)
     }
 }
 

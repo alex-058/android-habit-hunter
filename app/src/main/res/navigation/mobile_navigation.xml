@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_navigation_dashboard_to_addCustomHabitFragment"
             app:destination="@id/addCustomHabitFragment" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_inputProgressHabit"
+            app:destination="@id/inputProgressHabitFragment" />
     </fragment>
 
     <fragment
@@ -32,8 +35,13 @@
         android:label="@string/title_add_custom_habit"
         tools:layout="@layout/fragment_add_custom_habit" />
     <fragment
-        android:id="@+id/inputProgressHabit"
-        android:name="org.othr.habithunter.ui.inputProgressHabit.inputProgressHabit"
+        android:id="@+id/inputProgressHabitFragment"
+        android:name="org.othr.habithunter.ui.inputProgressHabit.InputProgressHabitFragment"
         android:label="fragment_input_progress_habit"
-        tools:layout="@layout/fragment_input_progress_habit" />
+        tools:layout="@layout/fragment_input_progress_habit" >
+        <argument
+            android:name="habitId"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

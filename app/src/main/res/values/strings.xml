@@ -20,6 +20,11 @@
     <string name="title_add_custom_habit">Add your habit</string>
     <string name="message_enterAllFields">Please enter / select all fields</string>
     <string name="enter_notes_progress">Enter notes</string>
+    <string name="textGoalInputHabit">Goal:</string>
+    <string name="text_habit_finished">Habit finished</string>
+    <string name="text_plus_1">+</string>
+    <string name="text_minus_1">-</string>
+    <string name="text_plus_5">+5</string>
 
     <string-array name="timeOptions">
         <item>seconds</item>

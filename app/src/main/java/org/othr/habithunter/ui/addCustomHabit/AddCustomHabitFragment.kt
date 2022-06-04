@@ -51,7 +51,8 @@ class AddCustomHabitFragment : Fragment() {
 
             if (binding.textHabitName.text?.isNotEmpty()!!) {
                 // operation on view model
-                addCustomHabitViewModel.addHabit(HabitModel(habitTitle = binding.textHabitName.text.toString()))
+                addCustomHabitViewModel.addHabit(HabitModel(habitTitle = binding.textHabitName.text.toString(),
+                habitGoal = binding.numberPickerAmount.value))
             } else {
                 Snackbar
                     .make(it, R.string.message_enterAllFields, Snackbar.LENGTH_LONG)
