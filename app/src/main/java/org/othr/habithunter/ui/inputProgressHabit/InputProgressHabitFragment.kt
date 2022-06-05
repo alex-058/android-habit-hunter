@@ -11,102 +11,87 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import org.othr.habithunter.R
+import org.othr.habithunter.databinding.FragmentAddCustomHabitBinding
 import org.othr.habithunter.databinding.FragmentInputProgressHabitBinding
 
 class InputProgressHabitFragment : Fragment() {
 
     private lateinit var inputProgressViewModel: InputProgressHabitViewModel
     private val args by navArgs<InputProgressHabitFragmentArgs>()
-    private var _fragBinding: FragmentInputProgressHabitBinding? = null
-    private val fragBinding get() = _fragBinding!!
+    private var _binding: FragmentInputProgressHabitBinding? = null
+    private val binding get() = _binding!!
     var habitProgress = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _fragBinding = FragmentInputProgressHabitBinding.inflate(inflater, container, false)
+        _binding = DataBindingUtil.inflate(inflater,R.layout.fragment_input_progress_habit, container, false)
         inputProgressViewModel = ViewModelProvider(this).get(InputProgressHabitViewModel::class.java)
 
-        // FIXME: Needed according to research
-        fragBinding.habitvm = inputProgressViewModel
-        fragBinding.lifecycleOwner = this
+        binding.habitvm = inputProgressViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
-        // FIXME: Should't this be triggered whenever data changes inside of the view model?
+        // Observe callback method not needed for the moment
         // inputProgressViewModel.observableHabit.observe(viewLifecycleOwner, Observer { render() })
 
-        // Retrieve habit data in the beginning
+        // Retrieve habit data in the beginning from args parameter passed
         inputProgressViewModel.getHabit(args.habitId)
 
+        // Retrieve progress
         habitProgress = inputProgressViewModel.getProgress()
 
-        // Set max progress bar to be in sync
-        fragBinding.progressBar.max = inputProgressViewModel.getGoalAmount()
 
-        /*
-        fragBinding.buttonIncrease.setOnClickListener {
-            if (habitProgress>= fragBinding.progressBar.max) {
+        // Button listener
+        binding.buttonIncrease.setOnClickListener {
+            if (habitProgress>= binding.progressBar.max) {
                 Toast.makeText(context,"You have already reached the goal!", Toast.LENGTH_LONG).show()
             }
             else {
                 habitProgress++;
-                inputProgressViewModel.increaseProgress(1) // TODO: Needed?
-                fragBinding.habitvm = inputProgressViewModel
+                inputProgressViewModel.increaseProgress(1) // updates layout
 
-                if (habitProgress >= fragBinding.progressBar.max) {
+                if (habitProgress >= binding.progressBar.max) {
                     Toast.makeText(context,"Goal reached!!", Toast.LENGTH_LONG).show()
                 }
             }
         }
 
-
-
-        fragBinding.buttonDecrease.setOnClickListener {
+        binding.buttonDecrease.setOnClickListener {
             if (habitProgress <= 0) {
                 Toast.makeText(context,"Attention. Negative progress not permitted!", Toast.LENGTH_LONG).show()
             }
             else {
                 habitProgress--;
-                // The following three things could (in my opinion) be resolved with data binding
-                // -> FIXME click listener is in xml direct and triggers the view model function, then view model live data changes -> progress and textView Progress should change
-                fragBinding.progressBar.progress = habitProgress
-                inputProgressViewModel.decreaseProgress(1) // TODO: Needed?
-                fragBinding.textViewProgress.text = inputProgressViewModel.getProgress().toString()
-                fragBinding.habitvm = inputProgressViewModel
-
-                // TODO: Are these calls on the view model really needed?
-                // TODO: Two-way-data binding maybe the solution -> layout should retrieve it from the view model automatically ?
+                inputProgressViewModel.decreaseProgress(1)
             }
         }
 
-        fragBinding.buttonIncreaseBy5.setOnClickListener {
-            if (habitProgress>= fragBinding.progressBar.max) {
+        binding.buttonIncreaseBy5.setOnClickListener {
+            if (habitProgress>= binding.progressBar.max) {
                 Toast.makeText(context,"You have already reached the goal!", Toast.LENGTH_LONG).show()
             }
             else {
                 habitProgress = habitProgress + 5;
-                fragBinding.progressBar.progress = habitProgress
-                inputProgressViewModel.increaseProgress(5) // TODO: Needed?
-                fragBinding.textViewProgress.text = inputProgressViewModel.getProgress().toString()
-                fragBinding.habitvm = inputProgressViewModel
+                inputProgressViewModel.increaseProgress(5)
 
-                if (habitProgress >= fragBinding.progressBar.max) {
+                if (habitProgress >= binding.progressBar.max) {
                     Toast.makeText(context,"Goal reached!!", Toast.LENGTH_LONG).show()
                 }
             }
         }
-         */
 
 
-
-
-        return fragBinding.root
+        return binding.root
     }
 
+    /*
     private fun render() {
         fragBinding.habitvm = inputProgressViewModel
         Toast.makeText(context, "Render function triggered", Toast.LENGTH_SHORT).show()
     }
+
+     */
 
     override fun onResume() {
         super.onResume()
@@ -114,7 +99,8 @@ class InputProgressHabitFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
-        _fragBinding = null
-    }
+            super.onDestroyView()
+            _binding = null
+        }
+
 }

@@ -10,6 +10,12 @@ object HabitManager : IHabitCrud {
 
     private var habits = ArrayList<HabitModel>() // holds data of habits
 
+    init {
+        // sample data
+        create(HabitModel(habitTitle = "Daily steps", habitGoal = 2000))
+        create(HabitModel(habitTitle = "Swim", habitGoal = 7))
+    }
+
     override fun create(habit: HabitModel) {
         habit.habitId = getId().toString() // set id for habit
         habits.add(habit)

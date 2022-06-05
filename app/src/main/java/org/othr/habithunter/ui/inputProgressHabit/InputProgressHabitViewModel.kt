@@ -1,5 +1,6 @@
 package org.othr.habithunter.ui.inputProgressHabit
 
+import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,31 +9,28 @@ import org.othr.habithunter.models.HabitModel
 
 class InputProgressHabitViewModel : ViewModel() {
 
-    private val habit = MutableLiveData<HabitModel>()
+    private val _habit = MutableLiveData<HabitModel>()
 
     val observableHabit: LiveData<HabitModel>
-            get() = habit
+            get() =  _habit
 
     fun getHabit(id: String) {
-        habit.value = HabitManager.getHabitById(id)
+        _habit.value = HabitManager.getHabitById(id)
     }
 
     fun increaseProgress(n: Int) {
-        habit.value?.habitProgress = habit.value?.habitProgress!! + n
+        _habit.value?.habitProgress =  _habit.value?.habitProgress!! + n
+        _habit.value = observableHabit.value
     }
 
-    // TODO: Could also be done directly in the layout, I believe -> listener on this field
     fun decreaseProgress(n: Int) {
-        habit.value?.habitProgress = habit.value?.habitProgress!! - n
-    }
-
-    // TODO: Retrieving viewModel "attributes" should not be needed with data binding -> can be referenced directly in xml
-    fun getGoalAmount () : Int {
-        return habit.value!!.habitGoal
+        _habit.value!!.habitProgress =  _habit.value!!.habitProgress - n
+        _habit.value = observableHabit.value // This triggers the observe method - missing link for live update
     }
 
     fun getProgress () : Int {
-        return habit.value!!.habitProgress
+        return _habit.value!!.habitProgress
     }
+
 
 }

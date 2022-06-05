@@ -18,42 +18,28 @@
         android:id="@+id/textHabitTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="?attr/textAppearanceHeadline4"
         android:text="@{habitvm.observableHabit.habitTitle}"
         app:layout_constraintBottom_toTopOf="@+id/progress_bar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.13"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.32"
         tools:text="DAILY STEPS"/>
 
-    <TextView
-        android:id="@+id/textGoal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/textGoalInputHabit"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/progress_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62"
-        tools:text="Goal:" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/inputTextGoalAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@{Integer.toString(habitvm.observableHabit.habitGoal)}"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/progress_bar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.01"
-        app:layout_constraintStart_toEndOf="@id/textGoal"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62"
+        app:layout_constraintVertical_bias="0.65"
         tools:text="5000" />
 
     <ProgressBar
@@ -62,6 +48,7 @@
         android:layout_height="200dp"
         android:indeterminateOnly="false"
         android:progress="@{habitvm.observableHabit.habitProgress}"
+        android:max="@{habitvm.observableHabit.habitGoal}"
         android:progressDrawable="@drawable/circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,47 +57,48 @@
         app:layout_constraintVertical_bias="0.32999998"
         tools:progress="60" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_view_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="@+id/progress_bar"
+        android:textAppearance="?attr/textAppearanceHeadline4"
         android:text="@{Integer.toString(habitvm.observableHabit.habitProgress)}"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/progress_bar"
         app:layout_constraintStart_toStartOf="@+id/progress_bar"
         app:layout_constraintTop_toTopOf="@+id/progress_bar"
         tools:text="60%" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+
         android:id="@+id/button_decrease"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/grey"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:layout_marginStart="20dp"
+        android:background="@drawable/rounded_corner"
+        android:layout_marginEnd="30dp"
         android:text="@string/text_minus_1"
+        android:textAppearance="?attr/textAppearanceButton"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/progress_bar"
-        app:layout_constraintEnd_toStartOf="@+id/progress_bar"
-        app:layout_constraintHorizontal_bias="0.43"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_progress"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/progress_bar"
         tools:text="-" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_increase"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/grey"
-        android:textColor="@color/black"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/rounded_corner"
         android:text="@string/text_plus_1"
-        android:onClick="@{() -> habitvm.increaseProgress(1)}"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="?attr/textAppearanceButton"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/progress_bar"
-        app:layout_constraintStart_toEndOf="@+id/progress_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_view_progress"
         app:layout_constraintTop_toTopOf="@+id/progress_bar"
-        app:layout_constraintHorizontal_bias="0.43"
         tools:text="+" />
 
     <Button
@@ -119,7 +107,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/grey"
         android:text="@string/text_plus_5"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="?attr/textAppearanceButton"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/progress_bar"
         app:layout_constraintStart_toEndOf="@+id/progress_bar"
@@ -127,14 +115,14 @@
         app:layout_constraintVertical_bias="1.0"
         tools:text="+ 5" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_progress_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="170dp"
         android:text="@string/text_habit_finished"
         android:backgroundTint="@color/grey"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="?attr/textAppearanceButton"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/progress_bar"
@@ -162,6 +150,7 @@
             android:id="@+id/textNotesHabitProgress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceButton"
             android:focusableInTouchMode="true"
             android:hint="@string/enter_notes_progress"
             android:textColorHint="#757575"

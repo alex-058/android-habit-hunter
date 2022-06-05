@@ -33,18 +33,16 @@
             android:id="@+id/habitTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:fontFamily="sans-serif-smallcaps"
+            android:layout_margin="10dp"
             android:gravity="center_horizontal"
             android:lines="1"
             android:padding="5dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
+            android:textAppearance="?attr/textAppearanceHeadline4"
             cardView:layout_constraintLeft_toRightOf="@id/image"
             cardView:layout_constraintRight_toRightOf="parent"
             cardView:layout_constraintTop_toTopOf="parent"
-            android:text="@{habit.habitTitle}" />
+            android:text="@{habit.habitTitle}"
+            tools:text="Habit Title"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
