@@ -37,7 +37,7 @@ class Home : AppCompatActivity() {
         // Trigger fullscreen support for: addCustomHabit Fragment
         navController.addOnDestinationChangedListener {
                 _, destination, _ ->
-            if (destination.id == R.id.addCustomHabitFragment) {
+            if (destination.id == R.id.addCustomHabitFragment || destination.id == R.id.navigation_profile) {
                 navView.visibility = View.GONE
             } else {
                 navView.visibility = View.VISIBLE

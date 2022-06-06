@@ -43,5 +43,10 @@
             android:name="habitId"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/loggedInFragment"
+        android:name="org.othr.habithunter.ui.profile.LoggedInFragment"
+        android:label="fragment_logged_in"
+        tools:layout="@layout/fragment_logged_in" />
 
 </navigation>
