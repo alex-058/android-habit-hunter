@@ -6,19 +6,19 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/fragment_loggedin_loggedInUser"
+        android:id="@+id/textloggedInUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_loggedin_logOut"
+        app:layout_constraintBottom_toTopOf="@+id/buttonlogOut"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="sample@test.de" />
 
     <Button
-        android:id="@+id/fragment_loggedin_logOut"
+        android:id="@+id/buttonlogOut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -29,6 +29,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_loggedin_loggedInUser" />
+        app:layout_constraintTop_toBottomOf="@+id/textloggedInUser" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

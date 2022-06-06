@@ -1,13 +1,23 @@
 package org.othr.habithunter.ui.profile
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseUser
+import org.othr.habithunter.firebase.FirebaseAuthManager
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel (app: Application) : AndroidViewModel(app) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+    var firebaseAuthManager : FirebaseAuthManager = FirebaseAuthManager(app)
+    var liveFirebaseUser : MutableLiveData<FirebaseUser> = firebaseAuthManager.liveFirebaseUser
+
+    fun login(email: String?, password: String?) {
+        firebaseAuthManager.login(email, password)
     }
-    val text: LiveData<String> = _text
+
+    fun register(email: String?, password: String?) {
+        firebaseAuthManager.register(email, password)
+    }
 }

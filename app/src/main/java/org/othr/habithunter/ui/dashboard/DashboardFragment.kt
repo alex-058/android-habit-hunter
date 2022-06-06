@@ -16,12 +16,14 @@ import org.othr.habithunter.databinding.FragmentDashboardBinding
 import org.othr.habithunter.models.HabitModel
 import org.othr.habithunter.adapters.HabitAdapter
 import org.othr.habithunter.adapters.HabitClickListener
+import org.othr.habithunter.ui.profile.LoggedInViewModel
 
 class DashboardFragment : Fragment(), HabitClickListener {
 
     private var _binding: FragmentDashboardBinding? = null
 
     lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var loggedInViewModel : LoggedInViewModel
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -56,6 +58,22 @@ class DashboardFragment : Fragment(), HabitClickListener {
             textView.text = it
         }*/
         return root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        loggedInViewModel= ViewModelProvider(this).get(LoggedInViewModel::class.java)
+        loggedInViewModel.liveFirebaseUser.observe(this, Observer { firebaseUser ->
+            if (firebaseUser != null)
+                // TODO: check this out
+                Toast.makeText(context, "User already logged-in", Toast.LENGTH_SHORT).show()
+        })
+
+        loggedInViewModel.loggedOut.observe(this, Observer { loggedout ->
+            if (loggedout) {
+                // Go to profile fragment
+                findNavController().navigate(R.id.action_navigation_dashboard_to_navigation_profile) } })
     }
 
     override fun onDestroyView() {
