@@ -1,21 +1,23 @@
 package org.othr.habithunter.ui.addCustomHabit
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
+import android.widget.RadioButton
 import android.widget.Toast
+import androidx.core.view.get
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import org.othr.habithunter.R
 import org.othr.habithunter.databinding.FragmentAddCustomHabitBinding
 import org.othr.habithunter.models.HabitModel
-import org.othr.habithunter.ui.dashboard.DashboardViewModel
+
 
 class AddCustomHabitFragment : Fragment() {
 
@@ -31,14 +33,18 @@ class AddCustomHabitFragment : Fragment() {
         val addCustomHabitViewModel =
             ViewModelProvider(this).get(AddCustomHabitViewModel::class.java)
 
-        addCustomHabitViewModel.observableStatus.observe(viewLifecycleOwner, Observer { status ->
-            status?.let { render(status) }
-        })
-
         _binding = FragmentAddCustomHabitBinding.inflate(inflater, container, false)
         val root = binding.root
 
         activity?.actionBar?.title = "Add custom habit"
+
+        // Binding ViewModel setup
+        binding.viewmodel = addCustomHabitViewModel
+        binding.lifecycleOwner = this
+
+        addCustomHabitViewModel.observableRadioChecked.observe (viewLifecycleOwner, Observer {
+            checked -> Toast.makeText(context, checked.toString(), Toast.LENGTH_SHORT).show()
+        })
 
         // Icon behaviour
         binding.profileImage.setOnClickListener {
@@ -49,17 +55,19 @@ class AddCustomHabitFragment : Fragment() {
         // Button behaviour
         binding.addCustomHabitBttn.setOnClickListener {
 
-            if (binding.textHabitName.text?.isNotEmpty()!!) {
+            if ((binding.textHabitName.text?.isNotEmpty()!!) && (binding.numberPickerAmount.value > 0)) {
                 // operation on view model
                 addCustomHabitViewModel.addHabit(HabitModel(habitTitle = binding.textHabitName.text.toString(),
                 habitGoal = binding.numberPickerAmount.value))
+                findNavController().navigateUp() // go immediately back
+
             } else {
                 Snackbar
                     .make(it, R.string.message_enterAllFields, Snackbar.LENGTH_LONG)
                     .show()
             }
 
-            findNavController().navigateUp() // go immediately back
+
         }
 
         // Dealing with keyboard focus -> does not work yet
@@ -109,20 +117,5 @@ class AddCustomHabitFragment : Fragment() {
         super.onResume()
     }
 
-    private fun render(status: Boolean) {
-        when (status) {
-            true -> {
-                view?.let {
-                    //Uncomment this if you want to immediately return to Report
-                    //findNavController().popBackStack()
-                }
-            }
-            false -> Toast.makeText(
-                context,
-                getString(R.string.habitErrorMessage),
-                Toast.LENGTH_LONG
-            ).show()
-        }
-    }
 
 }

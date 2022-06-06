@@ -32,5 +32,10 @@ class InputProgressHabitViewModel : ViewModel() {
         return _habit.value!!.habitProgress
     }
 
+    fun boostProgress() {
+        _habit.value!!.habitProgress = _habit.value!!.habitGoal
+        _habit.value = observableHabit.value
+    }
+
 
 }

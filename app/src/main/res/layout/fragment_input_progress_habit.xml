@@ -24,9 +24,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32"
+        app:layout_constraintVertical_bias="0.18"
         tools:text="DAILY STEPS" />
 
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textIntervallGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{habitvm.observableHabit.habitIntervall.toString()}"
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/progress_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.53"
+        tools:text="Daily" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/inputTextGoalAmount"
@@ -39,7 +53,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65"
+        app:layout_constraintVertical_bias="0.84000003"
         tools:text="5000" />
 
     <ProgressBar

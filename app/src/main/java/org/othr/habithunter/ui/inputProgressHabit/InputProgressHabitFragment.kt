@@ -41,7 +41,6 @@ class InputProgressHabitFragment : Fragment() {
         // Retrieve progress
         habitProgress = inputProgressViewModel.getProgress()
 
-
         // Button listener
         binding.buttonIncrease.setOnClickListener {
             if (habitProgress>= binding.progressBar.max) {
@@ -79,6 +78,12 @@ class InputProgressHabitFragment : Fragment() {
                     Toast.makeText(context,"Goal reached!!", Toast.LENGTH_LONG).show()
                 }
             }
+        }
+
+        binding.buttonProgressDone.setOnClickListener {
+            habitProgress = binding.progressBar.max
+            inputProgressViewModel.boostProgress()
+            Toast.makeText(context,"Goal reached!!", Toast.LENGTH_LONG).show()
         }
 
 

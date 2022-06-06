@@ -11,4 +11,5 @@ data class HabitModel(
     var habitTitle: String = "N/A",
     var habitImage: Uri = Uri.EMPTY,
     var habitGoal: Int = 0,
-    var habitProgress: Int = 0) : Parcelable
+    var habitProgress: Int = 0,
+    var habitIntervall: HabitIntervall = HabitIntervall.MONTHLY) : Parcelable
