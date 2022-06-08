@@ -8,10 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import me.tankery.lib.circularseekbar.CircularSeekBar
 import org.othr.habithunter.R
-import org.othr.habithunter.databinding.FragmentAddCustomHabitBinding
 import org.othr.habithunter.databinding.FragmentInputProgressHabitBinding
 
 class InputProgressHabitFragment : Fragment() {
@@ -41,47 +40,34 @@ class InputProgressHabitFragment : Fragment() {
         // Retrieve progress
         habitProgress = inputProgressViewModel.getProgress()
 
-        // Button listener
-        binding.buttonIncrease.setOnClickListener {
-            if (habitProgress>= binding.progressBar.max) {
-                Toast.makeText(context,"You have already reached the goal!", Toast.LENGTH_LONG).show()
-            }
-            else {
-                habitProgress++;
-                inputProgressViewModel.increaseProgress(1) // updates layout
+        // Deal initially with seek Bar
+        binding.progressBar.progress = inputProgressViewModel.getProgress().toFloat()
+        binding.progressBar.max = inputProgressViewModel.getGoal().toFloat()
 
-                if (habitProgress >= binding.progressBar.max) {
-                    Toast.makeText(context,"Goal reached!!", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
+        binding.progressBar.setOnSeekBarChangeListener(object : CircularSeekBar.OnCircularSeekBarChangeListener{
 
-        binding.buttonDecrease.setOnClickListener {
-            if (habitProgress <= 0) {
-                Toast.makeText(context,"Attention. Negative progress not permitted!", Toast.LENGTH_LONG).show()
-            }
-            else {
-                habitProgress--;
-                inputProgressViewModel.decreaseProgress(1)
-            }
-        }
+            override fun onProgressChanged(
+                circularSeekBar: CircularSeekBar?,
+                progress: Float,
+                fromUser: Boolean
+            ) {
+                // here, you react to the value being set in seekBar
+                binding.textViewProgress.setText(progress.toInt().toString())
 
-        binding.buttonIncreaseBy5.setOnClickListener {
-            if (habitProgress>= binding.progressBar.max) {
-                Toast.makeText(context,"You have already reached the goal!", Toast.LENGTH_LONG).show()
             }
-            else {
-                habitProgress = habitProgress + 5;
-                inputProgressViewModel.increaseProgress(5)
 
-                if (habitProgress >= binding.progressBar.max) {
-                    Toast.makeText(context,"Goal reached!!", Toast.LENGTH_LONG).show()
-                }
+            override fun onStartTrackingTouch(seekBar: CircularSeekBar?) {
+                Toast.makeText(context, "Start Gaining", Toast.LENGTH_SHORT).show()
             }
-        }
+
+            override fun onStopTrackingTouch(seekBar: CircularSeekBar?) {
+                inputProgressViewModel.setProgress(seekBar!!.progress.toInt())
+            }
+        })
+
 
         binding.buttonProgressDone.setOnClickListener {
-            habitProgress = binding.progressBar.max
+            binding.progressBar.progress = binding.progressBar.max
             inputProgressViewModel.boostProgress()
             Toast.makeText(context,"Goal reached!!", Toast.LENGTH_LONG).show()
         }

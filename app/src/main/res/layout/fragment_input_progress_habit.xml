@@ -56,78 +56,46 @@
         app:layout_constraintVertical_bias="0.84000003"
         tools:text="5000" />
 
-    <ProgressBar
+
+    <me.tankery.lib.circularseekbar.CircularSeekBar
         android:id="@+id/progress_bar"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:indeterminateOnly="false"
-        android:progress="@{habitvm.observableHabit.habitProgress}"
-        android:max="@{habitvm.observableHabit.habitGoal}"
-        android:progressDrawable="@drawable/circle"
+        app:cs_circle_color="@color/grey"
+        app:cs_circle_fill="@color/white"
+        app:cs_circle_stroke_width="10dp"
+        app:cs_circle_style="round"
+        app:cs_circle_x_radius="0dp"
+        app:cs_circle_y_radius="0dp"
+        app:cs_disable_pointer="false"
+        app:cs_disable_progress_glow="true"
+        app:cs_hide_progress_when_empty="true"
+        app:cs_lock_enabled="true"
+        app:cs_maintain_equal_circle="true"
+        app:cs_move_outside_circle="false"
+        app:cs_negative_enabled="false"
+        app:cs_pointer_alpha_ontouch="5"
+        app:cs_pointer_angle="0"
+        app:cs_pointer_stroke_width="20dp"
+        app:cs_use_custom_radii="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32999998"
-        tools:progress="60" />
+        app:layout_constraintVertical_bias="0.32999998"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_view_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/progress_bar"
         android:textAppearance="?attr/textAppearanceHeadline4"
         android:text="@{Integer.toString(habitvm.observableHabit.habitProgress)}"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/progress_bar"
         app:layout_constraintStart_toStartOf="@+id/progress_bar"
         app:layout_constraintTop_toTopOf="@+id/progress_bar"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_bar"
         tools:text="60%" />
-
-    <androidx.appcompat.widget.AppCompatButton
-
-        android:id="@+id/button_decrease"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner"
-        android:layout_marginEnd="30dp"
-        android:text="@string/text_minus_1"
-        android:textAppearance="?attr/textAppearanceButton"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/progress_bar"
-        app:layout_constraintEnd_toStartOf="@+id/text_view_progress"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/progress_bar"
-        tools:text="-" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_increase"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:background="@drawable/rounded_corner"
-        android:text="@string/text_plus_1"
-        android:textAppearance="?attr/textAppearanceButton"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/progress_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_view_progress"
-        app:layout_constraintTop_toTopOf="@+id/progress_bar"
-        tools:text="+" />
-
-    <Button
-        android:id="@+id/button_increaseBy5"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/grey"
-        android:text="@string/text_plus_5"
-        android:textAppearance="?attr/textAppearanceButton"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/progress_bar"
-        app:layout_constraintStart_toEndOf="@+id/progress_bar"
-        app:layout_constraintTop_toTopOf="@+id/progress_bar"
-        app:layout_constraintVertical_bias="1.0"
-        tools:text="+ 5" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_progress_done"
@@ -164,7 +132,10 @@
             android:id="@+id/textNotesHabitProgress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceButton"
+            android:fontFamily= "sans-serif"
+            android:textSize = "15sp"
+            android:textStyle = "normal"
+            android:letterSpacing="0.1"
             android:focusableInTouchMode="true"
             android:hint="@string/enter_notes_progress"
             android:textColorHint="#757575"

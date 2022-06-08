@@ -1,0 +1,1 @@
+[{"navFile":"src/main/res/navigation/mobile_navigation.xml","javaFiles":["org.othr.habithunter.ui.dashboard.DashboardFragmentDirections","org.othr.habithunter.ui.profile.ProfileFragmentDirections","org.othr.habithunter.ui.inputProgressHabit.InputProgressHabitFragmentArgs","org.othr.habithunter.ui.profile.LoggedInFragmentDirections"]}]

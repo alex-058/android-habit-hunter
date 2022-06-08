@@ -37,7 +37,10 @@
             android:id="@+id/textHabitName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceButton"
+            android:fontFamily= "sans-serif"
+            android:textSize = "15sp"
+            android:textStyle = "normal"
+            android:letterSpacing="0.1"
             android:focusableInTouchMode="true"
             android:hint="@string/enter_name_of_habit"
             android:textColorHint="#757575" />
