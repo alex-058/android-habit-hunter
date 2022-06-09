@@ -33,13 +33,10 @@
 
         <TextView
             android:id="@+id/habitTitle"
-            android:layout_width="216dp"
-            android:layout_height="57dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_marginStart="120dp"
-            android:layout_marginBottom="23dp"
             android:lines="1"
-            android:padding="5dp"
             android:text="@{habit.habitTitle}"
             android:textAppearance="?attr/textAppearanceHeadline4"
             android:textSize="30sp"
@@ -47,8 +44,27 @@
             cardView:layout_constraintRight_toRightOf="parent"
             cardView:layout_constraintStart_toEndOf="@+id/image"
             cardView:layout_constraintTop_toTopOf="parent"
-            cardView:layout_constraintVertical_bias="0.37"
+            cardView:layout_constraintVertical_bias="0.0"
             tools:text="Habit Title" />
+
+        <TextView
+            android:id="@+id/habitIntervall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="sans-serif"
+            android:letterSpacing="0"
+            android:lines="1"
+            android:text="@{habit.habitIntervall.toString()}"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            cardView:layout_constraintBottom_toBottomOf="parent"
+            cardView:layout_constraintRight_toRightOf="parent"
+            cardView:layout_constraintStart_toEndOf="@+id/image"
+            cardView:layout_constraintTop_toTopOf="parent"
+            cardView:layout_constraintVertical_bias="0.86"
+            tools:text="Monthly" />
 
         <ProgressBar
             android:id="@+id/progress_bar"

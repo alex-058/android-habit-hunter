@@ -12,8 +12,8 @@ object HabitManager : IHabitCrud {
 
     init {
         // sample data
-        create(HabitModel(habitTitle = "Daily steps", habitGoal = 2000))
-        create(HabitModel(habitTitle = "Swim", habitGoal = 7))
+        create(HabitModel(habitTitle = "Steps", habitGoal = 2000, habitIntervall = HabitIntervall.DAILY))
+        create(HabitModel(habitTitle = "Swim", habitGoal = 7, habitIntervall = HabitIntervall.MONTHLY))
     }
 
     override fun create(habit: HabitModel) {
