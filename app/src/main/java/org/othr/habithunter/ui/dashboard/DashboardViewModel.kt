@@ -20,4 +20,8 @@ class DashboardViewModel : ViewModel() {
     fun load() {
         habitList.value = HabitManager.getHabits() // get data from storage
     }
+
+    fun delete(id: String) {
+        HabitManager.delete(id)
+    }
 }

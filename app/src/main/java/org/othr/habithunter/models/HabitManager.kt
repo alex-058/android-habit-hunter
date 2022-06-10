@@ -1,5 +1,7 @@
 package org.othr.habithunter.models
 
+import timber.log.Timber
+
 var lastId = 0L
 
 internal fun getId(): Long {
@@ -8,20 +10,22 @@ internal fun getId(): Long {
 
 object HabitManager : IHabitCrud {
 
-    private var habits = ArrayList<HabitModel>() // holds data of habits
+    val habits = ArrayList<HabitModel>() // holds data of habits
 
     init {
         // sample data
         create(HabitModel(habitTitle = "Steps", habitGoal = 2000, habitIntervall = HabitIntervall.DAILY))
         create(HabitModel(habitTitle = "Swim", habitGoal = 7, habitIntervall = HabitIntervall.MONTHLY))
+        create(HabitModel(habitTitle = "Ride", habitGoal = 7, habitIntervall = HabitIntervall.MONTHLY))
     }
 
     override fun create(habit: HabitModel) {
-        habit.habitId = getId().toString() // set id for habit
+        habit.habitId = getId().toString() // set id for habit, starts with zero
         habits.add(habit)
+        logAll()
     }
 
-    override fun getHabits(): ArrayList<HabitModel> {
+    override fun getHabits(): List<HabitModel> {
         return habits
     }
 
@@ -30,12 +34,20 @@ object HabitManager : IHabitCrud {
         return habit
     }
 
-    override fun delete(habit: HabitModel) {
-        habits.remove(habit)
+    // This is not being triggered at the moment -> Adapter directly removed item from the list
+    override fun delete(id: String) {
+        habits.removeAt(id.toInt())
+        Timber.i("Habit removed from list with id: " + id)
+        logAll()
     }
 
     override fun update(id: String, updatedHabit: HabitModel) {
         var oldHabit = habits.get(Integer.parseInt(id))
         oldHabit = updatedHabit
+    }
+
+    private fun logAll() {
+        Timber.v("** Habit List **")
+        habits.forEach { Timber.v("Donate ${it}") }
     }
 }

@@ -23,13 +23,13 @@ class HabitAdapter constructor(private var habits: ArrayList<HabitModel>,
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        val habit = habits[holder.adapterPosition]
+        val habit = habits[holder.bindingAdapterPosition]
         holder.bind(habit,listener)
     }
 
     fun removeAt(position: Int) {
-        habits.removeAt(position)
-        notifyItemRemoved(position)
+        habits.removeAt(position) // removes the habit from the list
+        notifyItemRemoved(position) // this also restructures the data set (elements in our list which are at that position or after it)
     }
 
     override fun getItemCount(): Int = habits.size
@@ -38,6 +38,7 @@ class HabitAdapter constructor(private var habits: ArrayList<HabitModel>,
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(habit: HabitModel, listener: HabitClickListener) {
+            binding.root.tag = habit
             binding.habit = habit
             binding.image.setImageResource(R.mipmap.ic_launcher_round)
             binding.root.setOnClickListener { listener.onHabitClick(habit) }

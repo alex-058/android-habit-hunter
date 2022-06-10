@@ -10,13 +10,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.othr.habithunter.R
 import org.othr.habithunter.databinding.FragmentDashboardBinding
 import org.othr.habithunter.models.HabitModel
 import org.othr.habithunter.adapters.HabitAdapter
 import org.othr.habithunter.adapters.HabitClickListener
 import org.othr.habithunter.ui.profile.LoggedInViewModel
+import org.othr.habithunter.utils.SwipeToDeleteCallback
 
 class DashboardFragment : Fragment(), HabitClickListener {
 
@@ -52,6 +55,19 @@ class DashboardFragment : Fragment(), HabitClickListener {
                 render(habits as ArrayList<HabitModel>)
             }
         })
+
+        // Handle swipe gesture
+        val swipeDeleteHandler = object : SwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = binding.habitRecyclerView.adapter as HabitAdapter
+                // This only needs to be done if we want to delete the habit also from the server / database..,  recycler view does already work with the LIST
+                // dashboardViewModel.delete((viewHolder.itemView.tag as HabitModel).habitId)
+                adapter.removeAt(viewHolder.bindingAdapterPosition)
+            }
+        }
+
+        val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
+        itemTouchDeleteHelper.attachToRecyclerView(binding.habitRecyclerView)
 
         /*val textView: TextView = binding.textDashboard
         dashboardViewModel.text.observe(viewLifecycleOwner) {

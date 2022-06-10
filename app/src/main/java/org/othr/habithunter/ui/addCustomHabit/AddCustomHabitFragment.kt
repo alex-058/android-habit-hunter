@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import org.othr.habithunter.R
 import org.othr.habithunter.databinding.FragmentAddCustomHabitBinding
+import org.othr.habithunter.models.HabitManager
 import org.othr.habithunter.models.HabitModel
 
 
