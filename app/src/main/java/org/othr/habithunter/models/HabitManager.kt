@@ -30,5 +30,12 @@ object HabitManager : IHabitCrud {
         return habit
     }
 
+    override fun delete(habit: HabitModel) {
+        habits.remove(habit)
+    }
 
+    override fun update(id: String, updatedHabit: HabitModel) {
+        var oldHabit = habits.get(Integer.parseInt(id))
+        oldHabit = updatedHabit
+    }
 }
