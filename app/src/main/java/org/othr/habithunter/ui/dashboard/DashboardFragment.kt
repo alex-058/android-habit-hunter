@@ -20,6 +20,7 @@ import org.othr.habithunter.adapters.HabitAdapter
 import org.othr.habithunter.adapters.HabitClickListener
 import org.othr.habithunter.ui.profile.LoggedInViewModel
 import org.othr.habithunter.utils.SwipeToDeleteCallback
+import org.othr.habithunter.utils.SwipeToEditCallback
 
 class DashboardFragment : Fragment(), HabitClickListener {
 
@@ -56,7 +57,7 @@ class DashboardFragment : Fragment(), HabitClickListener {
             }
         })
 
-        // Handle swipe gesture
+        // Handle swipe to delete gesture
         val swipeDeleteHandler = object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = binding.habitRecyclerView.adapter as HabitAdapter
@@ -68,6 +69,16 @@ class DashboardFragment : Fragment(), HabitClickListener {
 
         val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
         itemTouchDeleteHelper.attachToRecyclerView(binding.habitRecyclerView)
+
+        // Swipe-to-edit feature
+
+        val swipeEditHandler = object : SwipeToEditCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                onHabitSwipeEdit(viewHolder.itemView.tag as HabitModel)
+            }
+        }
+        val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
+        itemTouchEditHelper.attachToRecyclerView(binding.habitRecyclerView)
 
         /*val textView: TextView = binding.textDashboard
         dashboardViewModel.text.observe(viewLifecycleOwner) {
@@ -99,7 +110,7 @@ class DashboardFragment : Fragment(), HabitClickListener {
 
     override fun onResume() {
         super.onResume()
-        dashboardViewModel.load() // syncs the list hopefully
+        dashboardViewModel.load() // syncs the list
     }
 
     private fun render(habitList: ArrayList<HabitModel>) {
@@ -120,6 +131,11 @@ class DashboardFragment : Fragment(), HabitClickListener {
         // findNavController().navigate(R.id.action_navigation_dashboard_to_inputProgressHabit)
 
         val action = DashboardFragmentDirections.actionNavigationDashboardToInputProgressHabit(habit.habitId)
+        findNavController().navigate(action)
+    }
+
+    private fun onHabitSwipeEdit(habit: HabitModel) {
+        val action = DashboardFragmentDirections.actionNavigationDashboardToAddCustomHabitFragment(habit.habitId)
         findNavController().navigate(action)
     }
 }

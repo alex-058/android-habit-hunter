@@ -1,5 +1,6 @@
 package org.othr.habithunter.models
 
+import org.othr.habithunter.adapters.HabitAdapter
 import timber.log.Timber
 
 var lastId = 0L
@@ -42,8 +43,7 @@ object HabitManager : IHabitCrud {
     }
 
     override fun update(id: String, updatedHabit: HabitModel) {
-        var oldHabit = habits.get(Integer.parseInt(id))
-        oldHabit = updatedHabit
+        habits.set(Integer.parseInt(id), updatedHabit)
     }
 
     private fun logAll() {

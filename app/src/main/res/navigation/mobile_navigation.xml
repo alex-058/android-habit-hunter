@@ -40,7 +40,13 @@
         android:id="@+id/addCustomHabitFragment"
         android:name="org.othr.habithunter.ui.addCustomHabit.AddCustomHabitFragment"
         android:label="@string/title_add_custom_habit"
-        tools:layout="@layout/fragment_add_custom_habit" />
+        tools:layout="@layout/fragment_add_custom_habit" >
+        <argument
+            android:name="habit_id"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+    </fragment>
     <fragment
         android:id="@+id/inputProgressHabitFragment"
         android:name="org.othr.habithunter.ui.inputProgressHabit.InputProgressHabitFragment"

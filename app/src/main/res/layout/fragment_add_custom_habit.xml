@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:fontFamily= "sans-serif"
             android:textSize = "15sp"
+            android:text="@={viewmodel.observableHabit.habitTitle}"
             android:textStyle = "normal"
             android:letterSpacing="0.1"
             android:focusableInTouchMode="true"
@@ -56,7 +57,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:textAppearance="?attr/textAppearanceButton"
-        android:text="@string/add_habit"
+        android:text="@{(viewmodel.observableHabit != null) ? @string/update_habit : @string/add_habit}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +94,7 @@
         android:id="@+id/textAddIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_add_icon"
+        android:text="@{(viewmodel.observableHabit != null) ? @string/text_edit_icon : @string/text_add_icon}"
         android:textAppearance="?attr/textAppearanceHeadline5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -154,10 +155,10 @@
 
         <RadioButton
             android:id="@+id/radioButtonDaily"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:text="@string/text_radio_button_daily" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/text_radio_button_daily"
+            android:textAppearance="?attr/textAppearanceSubtitle1" />
 
         <RadioButton
             android:id="@+id/radioButtonWeekly"
@@ -227,6 +228,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="7dp"
         android:layout_marginBottom="7dp"
+        android:value="@={viewmodel.observableHabit.habitGoal}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.19"

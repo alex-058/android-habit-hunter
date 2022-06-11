@@ -9,9 +9,11 @@
     <!-- String resources for custom habit layout file -->
     <string name="enter_name_of_habit">Enter name of habit</string>
     <string name="add_habit">Add habit</string>
+    <string name="update_habit">Update habit</string>
     <string name="text_intervall">Intervall</string>
     <string name="text_goal">Goal</string>
     <string name="text_add_icon">Add icon</string>
+    <string name="text_edit_icon">Edit icon</string>
     <string name="text_radio_button_daily">Daily</string>
     <string name="text_radio_button_weekly">Weekly</string>
     <string name="text_radio_button_monthly">Monthly</string>

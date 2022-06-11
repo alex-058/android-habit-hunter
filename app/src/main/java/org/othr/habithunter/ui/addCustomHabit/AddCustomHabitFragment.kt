@@ -13,9 +13,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import org.othr.habithunter.R
 import org.othr.habithunter.databinding.FragmentAddCustomHabitBinding
+import org.othr.habithunter.models.HabitIntervall
 import org.othr.habithunter.models.HabitManager
 import org.othr.habithunter.models.HabitModel
 
@@ -25,6 +27,9 @@ class AddCustomHabitFragment : Fragment() {
     // binding support
     private var _binding: FragmentAddCustomHabitBinding? = null
     private val binding get() = _binding!!
+    private var editMode: Boolean = false
+
+    private val args by navArgs<AddCustomHabitFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +43,14 @@ class AddCustomHabitFragment : Fragment() {
         val root = binding.root
 
         activity?.actionBar?.title = "Add custom habit"
+
+        // Retrieve state  if args parameter passed
+        editMode = (args.habitId?.isNullOrEmpty() == false)
+
+        if (editMode) {
+            addCustomHabitViewModel.getHabit(args.habitId!!)
+        }
+
 
         // Binding ViewModel setup
         binding.viewmodel = addCustomHabitViewModel
@@ -56,17 +69,27 @@ class AddCustomHabitFragment : Fragment() {
         // Button behaviour
         binding.addCustomHabitBttn.setOnClickListener {
 
-            if ((binding.textHabitName.text?.isNotEmpty()!!) && (binding.numberPickerAmount.value > 0)) {
-                // operation on view model
-                addCustomHabitViewModel.addHabit(HabitModel(habitTitle = binding.textHabitName.text.toString(),
-                habitGoal = binding.numberPickerAmount.value))
-                findNavController().navigateUp() // go immediately back
+            if (editMode) {
+                if ((binding.textHabitName.text?.isNotEmpty()!!) && (binding.numberPickerAmount.value > 0)) {
+                    addCustomHabitViewModel.updateHabit(args.habitId!!, addCustomHabitViewModel.observableHabit.value!!)
+                    findNavController().navigateUp() // go immediately back
+                }
 
-            } else {
-                Snackbar
-                    .make(it, R.string.message_enterAllFields, Snackbar.LENGTH_LONG)
-                    .show()
             }
+            else {
+                if ((binding.textHabitName.text?.isNotEmpty()!!) && (binding.numberPickerAmount.value > 0)) {
+                    // operation on view model
+                    addCustomHabitViewModel.addHabit(HabitModel(habitTitle = binding.textHabitName.text.toString(),
+                        habitGoal = binding.numberPickerAmount.value))
+                    findNavController().navigateUp() // go immediately back
+
+                } else {
+                    Snackbar
+                        .make(it, R.string.message_enterAllFields, Snackbar.LENGTH_LONG)
+                        .show()
+                }
+            }
+
 
 
         }
@@ -80,7 +103,7 @@ class AddCustomHabitFragment : Fragment() {
 
         // Amount Number Picker setup
         binding.numberPickerAmount.minValue
-        binding.numberPickerAmount.maxValue = 60;
+        binding.numberPickerAmount.maxValue = 300000;
 
 
         binding.numberPickerAmount.setOnValueChangedListener(NumberPicker.OnValueChangeListener { picker, oldVal, newVal ->
@@ -90,6 +113,15 @@ class AddCustomHabitFragment : Fragment() {
         // Time Options Picker setup
         binding.numberPickerTime.displayedValues = resources.getStringArray(R.array.timeOptions)
         binding.numberPickerTime.maxValue = resources.getStringArray(R.array.timeOptions).size - 1
+
+        // TODO: Does this align with MVVM principles?
+        if (editMode) {
+            when (addCustomHabitViewModel.observableHabit.value!!.habitIntervall) {
+                HabitIntervall.DAILY -> addCustomHabitViewModel.observableRadioChecked.value = binding.radioButtonDaily.id
+                HabitIntervall.WEEKLY -> addCustomHabitViewModel.observableRadioChecked.value = binding.radioButtonWeekly.id
+                HabitIntervall.MONTHLY ->  addCustomHabitViewModel.observableRadioChecked.value = binding.radioButtonMonthly.id
+            }
+        }
 
         binding.amountTimeRadioGroup.setOnCheckedChangeListener { radioGroup, optionId ->
             run {
