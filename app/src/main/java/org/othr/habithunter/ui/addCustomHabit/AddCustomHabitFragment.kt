@@ -56,8 +56,15 @@ class AddCustomHabitFragment : Fragment() {
         binding.viewmodel = addCustomHabitViewModel
         binding.lifecycleOwner = this
 
-        addCustomHabitViewModel.observableRadioChecked.observe (viewLifecycleOwner, Observer {
+        addCustomHabitViewModel.observableRadioIntervallChecked.observe (viewLifecycleOwner, Observer {
             checked -> Toast.makeText(context, checked.toString(), Toast.LENGTH_SHORT).show()
+        })
+
+        addCustomHabitViewModel.observableRadioAmountChecked.observe(viewLifecycleOwner, Observer {
+            checked -> when (checked) {
+                R.id.radioButtonTime -> binding.numberPickerTime.isVisible = true
+                R.id.radioButtonAmount -> binding.numberPickerTime.isVisible = false
+        }
         })
 
         // Icon behaviour
@@ -66,11 +73,26 @@ class AddCustomHabitFragment : Fragment() {
                 .show()
         }
 
+        // Time Options Picker setup
+        binding.numberPickerTime.displayedValues = resources.getStringArray(R.array.timeOptions)
+        binding.numberPickerTime.maxValue = resources.getStringArray(R.array.timeOptions).size - 1
+
         // Button behaviour
         binding.addCustomHabitBttn.setOnClickListener {
 
+            // Grab unit in every case
+            val unit: String
+            if (binding.radioButtonAmount.isChecked) {
+                unit = "count"
+            } else {
+                val test = binding.numberPickerTime.value
+                unit = binding.numberPickerTime.displayedValues.get(test)
+            }
+
+
             if (editMode) {
                 if ((binding.textHabitName.text?.isNotEmpty()!!) && (binding.numberPickerAmount.value > 0)) {
+                    addCustomHabitViewModel.observableHabit.value!!.habitUnit = unit // to store also unit in the habit which is then stored
                     addCustomHabitViewModel.updateHabit(args.habitId!!, addCustomHabitViewModel.observableHabit.value!!)
                     findNavController().navigateUp() // go immediately back
                 }
@@ -80,7 +102,7 @@ class AddCustomHabitFragment : Fragment() {
                 if ((binding.textHabitName.text?.isNotEmpty()!!) && (binding.numberPickerAmount.value > 0)) {
                     // operation on view model
                     addCustomHabitViewModel.addHabit(HabitModel(habitTitle = binding.textHabitName.text.toString(),
-                        habitGoal = binding.numberPickerAmount.value))
+                        habitGoal = binding.numberPickerAmount.value, habitUnit = unit))
                     findNavController().navigateUp() // go immediately back
 
                 } else {
@@ -105,38 +127,33 @@ class AddCustomHabitFragment : Fragment() {
         binding.numberPickerAmount.minValue
         binding.numberPickerAmount.maxValue = 300000;
 
-
-        binding.numberPickerAmount.setOnValueChangedListener(NumberPicker.OnValueChangeListener { picker, oldVal, newVal ->
-
-        })
-
-        // Time Options Picker setup
-        binding.numberPickerTime.displayedValues = resources.getStringArray(R.array.timeOptions)
-        binding.numberPickerTime.maxValue = resources.getStringArray(R.array.timeOptions).size - 1
-
         // TODO: Does this align with MVVM principles?
+        // Correctly present values when in edit-mode
         if (editMode) {
             when (addCustomHabitViewModel.observableHabit.value!!.habitIntervall) {
-                HabitIntervall.DAILY -> addCustomHabitViewModel.observableRadioChecked.value = binding.radioButtonDaily.id
-                HabitIntervall.WEEKLY -> addCustomHabitViewModel.observableRadioChecked.value = binding.radioButtonWeekly.id
-                HabitIntervall.MONTHLY ->  addCustomHabitViewModel.observableRadioChecked.value = binding.radioButtonMonthly.id
+                HabitIntervall.DAILY -> addCustomHabitViewModel.observableRadioIntervallChecked.value = binding.radioButtonDaily.id
+                HabitIntervall.WEEKLY -> addCustomHabitViewModel.observableRadioIntervallChecked.value = binding.radioButtonWeekly.id
+                HabitIntervall.MONTHLY ->  addCustomHabitViewModel.observableRadioIntervallChecked.value = binding.radioButtonMonthly.id
             }
-        }
 
-        binding.amountTimeRadioGroup.setOnCheckedChangeListener { radioGroup, optionId ->
-            run {
-                when (optionId) {
-                    R.id.radioButtonTime -> {
-                        // do something when radio button 1 is selected
-                        binding.numberPickerTime.isVisible = true
-                    }
-                    R.id.radioButtonAmount -> {
-                        binding.numberPickerTime.isVisible = false
-                    }
+            // TODO: Goal is to take habit unit from observable habit and display it to the user
+            when (addCustomHabitViewModel.observableHabit.value!!.habitUnit) {
+                "amount" -> addCustomHabitViewModel.observableRadioAmountChecked.value = binding.radioButtonAmount.id
+
+                "seconds" ->  {
+                    addCustomHabitViewModel.observableRadioAmountChecked.value = binding.radioButtonTime.id
+                    binding.numberPickerTime.value = resources.getStringArray(R.array.timeOptions).indexOf("seconds")
+                }
+                "minutes" ->  {
+                    addCustomHabitViewModel.observableRadioAmountChecked.value = binding.radioButtonTime.id
+                    binding.numberPickerTime.value = resources.getStringArray(R.array.timeOptions).indexOf("minutes")
+                }
+                "hours" ->  {
+                    addCustomHabitViewModel.observableRadioAmountChecked.value = binding.radioButtonTime.id
+                    binding.numberPickerTime.value = resources.getStringArray(R.array.timeOptions).indexOf("hours")
                 }
             }
         }
-
 
         return root
     }

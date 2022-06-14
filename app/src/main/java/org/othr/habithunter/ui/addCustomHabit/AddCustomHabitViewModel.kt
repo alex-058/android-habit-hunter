@@ -19,7 +19,9 @@ class AddCustomHabitViewModel : ViewModel() {
         get() = _radioChecked
      */
 
-    var observableRadioChecked = MutableLiveData(R.id.radioButtonDaily)
+    var observableRadioIntervallChecked = MutableLiveData(R.id.radioButtonDaily)
+
+    var observableRadioAmountChecked = MutableLiveData(R.id.radioButtonAmount)
 
     private val _habit = MutableLiveData<HabitModel>()
 
@@ -32,16 +34,24 @@ class AddCustomHabitViewModel : ViewModel() {
 
     fun addHabit(habit: HabitModel) {
 
-        when(observableRadioChecked.value) {
+        when(observableRadioIntervallChecked.value) {
             R.id.radioButtonDaily -> habit.habitIntervall = HabitIntervall.DAILY // here is the operation on the model
             R.id.radioButtonWeekly -> habit.habitIntervall = HabitIntervall.WEEKLY
             R.id.radioButtonMonthly -> habit.habitIntervall = HabitIntervall.MONTHLY
         }
 
         HabitManager.create(habit)
+        _habit.value = observableHabit.value
     }
 
     fun updateHabit (id: String, habit: HabitModel) {
+
+        when(observableRadioIntervallChecked.value) {
+            R.id.radioButtonDaily -> habit.habitIntervall = HabitIntervall.DAILY // here is the operation on the model
+            R.id.radioButtonWeekly -> habit.habitIntervall = HabitIntervall.WEEKLY
+            R.id.radioButtonMonthly -> habit.habitIntervall = HabitIntervall.MONTHLY
+        }
+
         HabitManager.update(id, habit)
         _habit.value = observableHabit.value
     }

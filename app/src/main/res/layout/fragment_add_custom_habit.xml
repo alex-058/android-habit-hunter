@@ -138,7 +138,7 @@
 
     <RadioGroup
         android:id="@+id/radioGroupIntervall"
-        android:checkedButton="@={viewmodel.observableRadioChecked}"
+        android:checkedButton="@={viewmodel.observableRadioIntervallChecked}"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -177,7 +177,7 @@
 
     <RadioGroup
         android:id="@+id/amountTimeRadioGroup"
-        android:checkedButton="@+id/radioButtonAmount"
+        android:checkedButton="@={viewmodel.observableRadioAmountChecked}"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

@@ -88,14 +88,29 @@
         android:id="@+id/text_view_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceHeadline4"
         android:text="@{Integer.toString(habitvm.observableHabit.habitProgress)}"
+        android:textAppearance="?attr/textAppearanceHeadline4"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_bar"
         app:layout_constraintEnd_toEndOf="@+id/progress_bar"
         app:layout_constraintStart_toStartOf="@+id/progress_bar"
         app:layout_constraintTop_toTopOf="@+id/progress_bar"
+        app:layout_constraintVertical_bias="0.36"
+        tools:text="60" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_view_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{habitvm.observableHabit.habitUnit}"
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/progress_bar"
-        tools:text="60%" />
+        app:layout_constraintEnd_toEndOf="@+id/progress_bar"
+        app:layout_constraintStart_toStartOf="@+id/progress_bar"
+        app:layout_constraintTop_toTopOf="@+id/progress_bar"
+        app:layout_constraintVertical_bias="0.6"
+        tools:text="count" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_progress_done"
