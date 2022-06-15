@@ -1,5 +1,9 @@
 package org.othr.habithunter.ui.dashboard
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,9 +22,12 @@ import org.othr.habithunter.databinding.FragmentDashboardBinding
 import org.othr.habithunter.models.HabitModel
 import org.othr.habithunter.adapters.HabitAdapter
 import org.othr.habithunter.adapters.HabitClickListener
+import org.othr.habithunter.alarm.AlarmReceiver
 import org.othr.habithunter.ui.profile.LoggedInViewModel
 import org.othr.habithunter.utils.SwipeToDeleteCallback
 import org.othr.habithunter.utils.SwipeToEditCallback
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DashboardFragment : Fragment(), HabitClickListener {
 
@@ -28,6 +35,10 @@ class DashboardFragment : Fragment(), HabitClickListener {
 
     lateinit var dashboardViewModel: DashboardViewModel
     private lateinit var loggedInViewModel : LoggedInViewModel
+
+    // Alarm support
+    private var alarmMgr: AlarmManager? = null
+    private var alarmIntent: PendingIntent? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -90,6 +101,8 @@ class DashboardFragment : Fragment(), HabitClickListener {
     override fun onStart() {
         super.onStart()
 
+        initializeAlert()
+
         loggedInViewModel= ViewModelProvider(this).get(LoggedInViewModel::class.java)
         loggedInViewModel.liveFirebaseUser.observe(this, Observer { firebaseUser ->
             if (firebaseUser != null)
@@ -137,6 +150,36 @@ class DashboardFragment : Fragment(), HabitClickListener {
     private fun onHabitSwipeEdit(habit: HabitModel) {
         val action = DashboardFragmentDirections.actionNavigationDashboardToAddCustomHabitFragment(habit.habitId)
         findNavController().navigate(action)
+    }
+
+    private fun initializeAlert() {
+
+        if (alarmMgr == null) { // only initialzize if no alarm was initialized before
+            alarmMgr = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(context, AlarmReceiver::class.java)
+            alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
+
+            // Set the alarm to start at approximately 2:00 p.m.
+
+            // Set the alarm to start now with this configuration
+            val calendar: Calendar = Calendar.getInstance()
+            calendar.setTimeInMillis(System.currentTimeMillis())
+            // calendar.set(Calendar.HOUR_OF_DAY, 14)
+
+            // With setInexactRepeating(), you have to use one of the AlarmManager interval
+            // constants--in this case, AlarmManager.INTERVAL_DAY.
+
+            // alarmMgr!!.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+            //     AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntent);
+
+            // For testing
+            alarmMgr!!.setRepeating(
+                AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                100000, alarmIntent); // 1,67 mins
+
+            Toast.makeText(context, "Alarm has been initialized!", Toast.LENGTH_LONG).show()
+        }
+
     }
 }
 

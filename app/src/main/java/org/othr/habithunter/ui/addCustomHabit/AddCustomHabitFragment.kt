@@ -1,5 +1,9 @@
 package org.othr.habithunter.ui.addCustomHabit
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +20,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import org.othr.habithunter.R
+import org.othr.habithunter.alarm.AlarmReceiver
 import org.othr.habithunter.databinding.FragmentAddCustomHabitBinding
 import org.othr.habithunter.models.HabitIntervall
 import org.othr.habithunter.models.HabitManager
 import org.othr.habithunter.models.HabitModel
+import java.util.*
 
 
 class AddCustomHabitFragment : Fragment() {

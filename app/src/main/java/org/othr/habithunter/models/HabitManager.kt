@@ -15,9 +15,9 @@ object HabitManager : IHabitCrud {
 
     init {
         // sample data
-        create(HabitModel(habitTitle = "Steps", habitGoal = 2000, habitIntervall = HabitIntervall.DAILY))
-        create(HabitModel(habitTitle = "Swim", habitGoal = 7, habitIntervall = HabitIntervall.MONTHLY))
-        create(HabitModel(habitTitle = "Ride", habitGoal = 7, habitIntervall = HabitIntervall.MONTHLY))
+        create(HabitModel(habitTitle = "Steps", habitGoal = 2000, habitIntervall = HabitIntervall.DAILY, habitProgress = 200))
+        create(HabitModel(habitTitle = "Swim", habitGoal = 7, habitIntervall = HabitIntervall.MONTHLY, habitProgress = 3))
+        create(HabitModel(habitTitle = "Ride", habitGoal = 7, habitIntervall = HabitIntervall.MONTHLY, habitProgress = 6))
     }
 
     override fun create(habit: HabitModel) {
@@ -49,5 +49,14 @@ object HabitManager : IHabitCrud {
     private fun logAll() {
         Timber.v("** Habit List **")
         habits.forEach { Timber.v("Donate ${it}") }
+    }
+
+    // Testing method for alarms
+    fun triggerTestMethod (){
+        habits.forEach {
+            when(it.habitIntervall) {
+                HabitIntervall.DAILY -> it.habitProgress = 0 // rest progress of daily habits
+            }
+        }
     }
 }
