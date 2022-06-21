@@ -22,6 +22,9 @@ class FirebaseAuthManager(application: Application) {
             liveFirebaseUser.postValue(firebaseAuth!!.currentUser)
             loggedOut.postValue(false)
         }
+        else {
+            loggedOut.postValue(true)
+        }
     }
 
     fun login(email: String?, password: String?) {

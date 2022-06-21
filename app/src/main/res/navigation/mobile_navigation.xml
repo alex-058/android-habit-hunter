@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_navigation_profile_to_loggedInFragment"
             app:destination="@id/loggedInFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
     </fragment>
     <fragment
         android:id="@+id/addCustomHabitFragment"

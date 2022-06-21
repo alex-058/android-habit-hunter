@@ -63,7 +63,7 @@ class ProfileFragment : Fragment() {
         profileViewModel.liveFirebaseUser.observe(this, Observer
         { firebaseUser -> if (firebaseUser != null)
             // navigate to loggedIn screen if user is already logged-in
-            findNavController().navigate(R.id.action_navigation_profile_to_loggedInFragment) })
+            findNavController().navigate(R.id.action_navigation_profile_to_navigation_dashboard) })
     }
 
 
