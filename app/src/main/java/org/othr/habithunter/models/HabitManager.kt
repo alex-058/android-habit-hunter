@@ -52,10 +52,20 @@ object HabitManager : IHabitCrud {
     }
 
     // Testing method for alarms
-    fun triggerTestMethod (){
+    fun resetHabits (firstOfWeek: Boolean, firstOfMonth: Boolean){
         habits.forEach {
             when(it.habitIntervall) {
-                HabitIntervall.DAILY -> it.habitProgress = 0 // rest progress of daily habits
+                HabitIntervall.DAILY -> it.habitProgress = 0 // alarm is triggered at midnight -> daily habits always will be reset
+                HabitIntervall.WEEKLY -> {
+                    if (firstOfWeek) {
+                        it.habitProgress = 0 // reset progress of weekly habit
+                    }
+                }
+                HabitIntervall.MONTHLY -> {
+                    if (firstOfMonth) {
+                        it.habitProgress = 0 // reset progress of monthly habit
+                    }
+                }
             }
         }
     }

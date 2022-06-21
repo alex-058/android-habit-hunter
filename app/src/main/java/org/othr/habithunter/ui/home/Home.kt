@@ -34,7 +34,7 @@ class Home : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        // Trigger fullscreen support for: addCustomHabit Fragment
+        // Trigger fullscreen support
         navController.addOnDestinationChangedListener {
                 _, destination, _ ->
             if (destination.id == R.id.addCustomHabitFragment || destination.id == R.id.navigation_profile) {

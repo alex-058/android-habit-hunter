@@ -164,7 +164,7 @@ class DashboardFragment : Fragment(), HabitClickListener {
             // Set the alarm to start now with this configuration
             val calendar: Calendar = Calendar.getInstance()
             calendar.setTimeInMillis(System.currentTimeMillis())
-            // calendar.set(Calendar.HOUR_OF_DAY, 14)
+            calendar.set(Calendar.HOUR_OF_DAY, 24) // start alarm at 0:00
 
             // With setInexactRepeating(), you have to use one of the AlarmManager interval
             // constants--in this case, AlarmManager.INTERVAL_DAY.
@@ -172,10 +172,10 @@ class DashboardFragment : Fragment(), HabitClickListener {
             // alarmMgr!!.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
             //     AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntent);
 
-            // For testing
+            // Set repeating alarm manager
             alarmMgr!!.setRepeating(
                 AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                100000, alarmIntent); // 1,67 mins
+                AlarmManager.INTERVAL_DAY, alarmIntent); // repeat alarm in one day cyclus
 
             Toast.makeText(context, "Alarm has been initialized!", Toast.LENGTH_LONG).show()
         }
