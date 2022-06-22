@@ -21,7 +21,7 @@ object HabitManager : IHabitCrud {
     }
 
     override fun create(habit: HabitModel) {
-        habit.habitId = getId().toString() // set id for habit, starts with zero
+        habit.uid = getId().toString() // set id for habit, starts with zero
         habits.add(habit)
         logAll()
     }
@@ -31,7 +31,7 @@ object HabitManager : IHabitCrud {
     }
 
     override fun getHabitById(id: String): HabitModel? {
-        val habit: HabitModel? = habits.find { it.habitId == id }
+        val habit: HabitModel? = habits.find { it.uid == id }
         return habit
     }
 

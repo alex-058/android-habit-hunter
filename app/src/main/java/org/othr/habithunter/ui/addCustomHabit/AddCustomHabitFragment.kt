@@ -25,6 +25,7 @@ import org.othr.habithunter.databinding.FragmentAddCustomHabitBinding
 import org.othr.habithunter.models.HabitIntervall
 import org.othr.habithunter.models.HabitManager
 import org.othr.habithunter.models.HabitModel
+import org.othr.habithunter.ui.profile.LoggedInViewModel
 import java.util.*
 
 
@@ -35,6 +36,8 @@ class AddCustomHabitFragment : Fragment() {
     private val binding get() = _binding!!
     private var editMode: Boolean = false
 
+    private lateinit var loggedInViewModel : LoggedInViewModel
+
     private val args by navArgs<AddCustomHabitFragmentArgs>()
 
     override fun onCreateView(
@@ -44,6 +47,8 @@ class AddCustomHabitFragment : Fragment() {
 
         val addCustomHabitViewModel =
             ViewModelProvider(this).get(AddCustomHabitViewModel::class.java)
+
+        loggedInViewModel= ViewModelProvider(this).get(LoggedInViewModel::class.java)
 
         _binding = FragmentAddCustomHabitBinding.inflate(inflater, container, false)
         val root = binding.root
@@ -107,8 +112,8 @@ class AddCustomHabitFragment : Fragment() {
             else {
                 if ((binding.textHabitName.text?.isNotEmpty()!!) && (binding.numberPickerAmount.value > 0)) {
                     // operation on view model
-                    addCustomHabitViewModel.addHabit(HabitModel(habitTitle = binding.textHabitName.text.toString(),
-                        habitGoal = binding.numberPickerAmount.value, habitUnit = unit))
+                    addCustomHabitViewModel.addHabit(firebaseUser = loggedInViewModel.liveFirebaseUser, HabitModel(habitTitle = binding.textHabitName.text.toString(),
+                        habitGoal = binding.numberPickerAmount.value, habitUnit = unit, email = loggedInViewModel.liveFirebaseUser.value?.email!!))
                     findNavController().navigateUp() // go immediately back
 
                 } else {

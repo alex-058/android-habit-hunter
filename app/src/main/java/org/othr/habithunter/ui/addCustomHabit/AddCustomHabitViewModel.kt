@@ -5,7 +5,9 @@ import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseUser
 import org.othr.habithunter.R
+import org.othr.habithunter.models.FirebaseDBManager
 import org.othr.habithunter.models.HabitIntervall
 import org.othr.habithunter.models.HabitManager
 import org.othr.habithunter.models.HabitModel
@@ -32,7 +34,7 @@ class AddCustomHabitViewModel : ViewModel() {
         _habit.value = HabitManager.getHabitById(id)
     }
 
-    fun addHabit(habit: HabitModel) {
+    fun addHabit(firebaseUser: MutableLiveData<FirebaseUser>, habit: HabitModel) {
 
         when(observableRadioIntervallChecked.value) {
             R.id.radioButtonDaily -> habit.habitIntervall = HabitIntervall.DAILY // here is the operation on the model
@@ -40,7 +42,8 @@ class AddCustomHabitViewModel : ViewModel() {
             R.id.radioButtonMonthly -> habit.habitIntervall = HabitIntervall.MONTHLY
         }
 
-        HabitManager.create(habit)
+        // HabitManager.create(habit)
+        FirebaseDBManager.create(firebaseUser, habit)
         _habit.value = observableHabit.value
     }
 

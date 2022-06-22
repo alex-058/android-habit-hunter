@@ -143,12 +143,12 @@ class DashboardFragment : Fragment(), HabitClickListener {
         // .show()
         // findNavController().navigate(R.id.action_navigation_dashboard_to_inputProgressHabit)
 
-        val action = DashboardFragmentDirections.actionNavigationDashboardToInputProgressHabit(habit.habitId)
+        val action = DashboardFragmentDirections.actionNavigationDashboardToInputProgressHabit(habit.uid)
         findNavController().navigate(action)
     }
 
     private fun onHabitSwipeEdit(habit: HabitModel) {
-        val action = DashboardFragmentDirections.actionNavigationDashboardToAddCustomHabitFragment(habit.habitId)
+        val action = DashboardFragmentDirections.actionNavigationDashboardToAddCustomHabitFragment(habit.uid)
         findNavController().navigate(action)
     }
 
