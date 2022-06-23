@@ -27,6 +27,7 @@
     <string name="text_plus_1">+</string>
     <string name="text_minus_1">-</string>
     <string name="text_plus_5">+5</string>
+    <string name="messageLoading">Please wait - Your habits are loading..</string>
 
     <string-array name="timeOptions">
         <item>seconds</item>

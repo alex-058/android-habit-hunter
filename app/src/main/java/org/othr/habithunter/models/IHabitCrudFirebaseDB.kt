@@ -7,7 +7,7 @@ interface IHabitCrudFirebaseDB {
 
     fun findAll(habitList:
                 MutableLiveData<List<HabitModel>>)
-    fun findAll(userid:String,
+    fun findAllByUser(userid:String,
                 habitList:
                 MutableLiveData<List<HabitModel>>)
     fun findById(userid:String, habitId: String,
