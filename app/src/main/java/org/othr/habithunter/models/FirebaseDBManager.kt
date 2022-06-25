@@ -4,15 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import timber.log.Timber
+import java.lang.Exception
 
 object FirebaseDBManager : IHabitCrudFirebaseDB {
 
     // Updated google-service.json should not need the link in the end
-    var database: DatabaseReference = FirebaseDatabase.getInstance("https://oth-habithunter-default-rtdb.europe-west1.firebasedatabase.app").reference
+    // var database: DatabaseReference = FirebaseDatabase.getInstance("https://oth-habithunter-default-rtdb.europe-west1.firebasedatabase.app").reference
 
-    override fun findAll(habitList: MutableLiveData<List<HabitModel>>) {
-        TODO("Not yet implemented")
-    }
+    var database: DatabaseReference = FirebaseDatabase.getInstance().reference
 
     override fun findAllByUser(userid: String, habitList: MutableLiveData<List<HabitModel>>) {
         database.child("user-habits").child(userid)
@@ -36,8 +35,23 @@ object FirebaseDBManager : IHabitCrudFirebaseDB {
             })
     }
 
-    override fun findById(userid: String, habitId: String, habit: MutableLiveData<HabitModel>) {
-        TODO("Not yet implemented")
+    override fun findById(userid: String, habitId: String, habit: MutableLiveData<HabitModel>){
+
+        database.child("user-habits").child(userid)
+            .child(habitId).get().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    habit.value = it.result.getValue(HabitModel::class.java)
+                    Timber.i("firebase Got value ${habit.value}")
+                }
+                else {
+                    Timber.e("firebase Error getting data ${it.result.getValue()}")
+                }
+            }.addOnFailureListener{
+                Timber.e("firebase Error getting data $it")
+            }
+
+
+
     }
 
     override fun create(firebaseUser: MutableLiveData<FirebaseUser>, habit: HabitModel) {
@@ -52,8 +66,8 @@ object FirebaseDBManager : IHabitCrudFirebaseDB {
         val habitValues = habit.toMap()
 
         val childAdd = HashMap<String, Any>()
-        childAdd["/habits/$key"] = habitValues
-        childAdd["/user-habits/$uid/$key"] = habitValues
+        // childAdd["/habits/$key"] = habitValues
+        childAdd["/user-habits/$uid/$key"] = habitValues // "save" habit for user
 
         database.updateChildren(childAdd)
     }

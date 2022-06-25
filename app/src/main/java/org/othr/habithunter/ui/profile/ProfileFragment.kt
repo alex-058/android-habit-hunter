@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -22,14 +23,13 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var profileViewModel: ProfileViewModel
+    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val profileViewModel =
-            ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -62,7 +62,8 @@ class ProfileFragment : Fragment() {
         profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         profileViewModel.liveFirebaseUser.observe(this, Observer
         { firebaseUser -> if (firebaseUser != null)
-            // navigate to loggedIn screen if user is already logged-in
+        // navigate to loggedIn screen if user is already logged-in
+            loggedInViewModel.liveFirebaseUser.value = profileViewModel.liveFirebaseUser.value
             findNavController().navigate(R.id.action_navigation_profile_to_navigation_dashboard) })
     }
 

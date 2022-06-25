@@ -5,8 +5,6 @@ import com.google.firebase.auth.FirebaseUser
 
 interface IHabitCrudFirebaseDB {
 
-    fun findAll(habitList:
-                MutableLiveData<List<HabitModel>>)
     fun findAllByUser(userid:String,
                 habitList:
                 MutableLiveData<List<HabitModel>>)

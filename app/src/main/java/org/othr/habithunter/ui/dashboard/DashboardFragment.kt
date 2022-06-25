@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -34,7 +35,7 @@ class DashboardFragment : Fragment(), HabitClickListener {
     private var _binding: FragmentDashboardBinding? = null
 
     lateinit var dashboardViewModel: DashboardViewModel
-    private lateinit var loggedInViewModel : LoggedInViewModel
+    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
 
     lateinit var loader : AlertDialog
 
@@ -112,10 +113,11 @@ class DashboardFragment : Fragment(), HabitClickListener {
 
         initializeAlert()
 
-        loggedInViewModel= ViewModelProvider(this).get(LoggedInViewModel::class.java)
         loggedInViewModel.liveFirebaseUser.observe(this, Observer { firebaseUser ->
             if (firebaseUser != null)
-                // TODO: check this out
+                // TODO: check this out#
+                    dashboardViewModel.liveFirebaseUser.value = firebaseUser
+                    dashboardViewModel.load() // syncs the list
                 Toast.makeText(context, "User already logged-in", Toast.LENGTH_SHORT).show()
         })
 

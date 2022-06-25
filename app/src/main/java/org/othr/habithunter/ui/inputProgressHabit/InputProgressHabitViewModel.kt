@@ -4,36 +4,58 @@ import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.othr.habithunter.models.FirebaseDBManager
 import org.othr.habithunter.models.HabitManager
 import org.othr.habithunter.models.HabitModel
+import timber.log.Timber
+import java.lang.Exception
 
 class InputProgressHabitViewModel : ViewModel() {
 
     private val _habit = MutableLiveData<HabitModel>()
 
-    val observableHabit: LiveData<HabitModel>
+    var observableHabit: LiveData<HabitModel>
             get() =  _habit
+            set(value) {_habit.value = value.value}
 
-    fun getHabit(id: String) {
-        _habit.value = HabitManager.getHabitById(id)
+    init {
+        _habit.value = HabitModel() // default initialize value of mutable live data
     }
 
-    fun getProgress () : Int {
+
+    fun findHabitById(userid: String, habitId: String) {
+        // _habit.value = FirebaseDBManager.findById(userid, habitId, _habit)
+        // FirebaseDBManager.findById(userid, habitId, _habit)
+
+        try {
+            //DonationManager.findById(email, id, donation)
+            FirebaseDBManager.findById(userid, habitId, _habit)
+            val test = _habit.value
+            Timber.i("Detail getHabitById() Success : ${
+                _habit.value.toString()}")
+        }
+        catch (e: Exception) {
+            Timber.i("Detail getHabitById() Error : $e.message")
+        }
+    }
+
+    fun findHabitProgress () : Int {
         return _habit.value!!.habitProgress
     }
 
-    fun setProgress(n: Int) {
+    fun createHabitProgress(n: Int) {
         _habit.value?.habitProgress = n
-        _habit.value = observableHabit.value
+        // TODO: update of firebase entry needed
     }
 
-    fun getGoal () : Int {
+    fun findhabitGoal () : Int {
+        val test = _habit.value!!.habitGoal
         return _habit.value!!.habitGoal
     }
 
-    fun boostProgress() {
+    fun boostHabitProgress() {
         _habit.value!!.habitProgress = _habit.value!!.habitGoal
-        _habit.value = observableHabit.value
+        // TODO: update of firebase entry needed
     }
 
 

@@ -44,7 +44,7 @@ class AddCustomHabitViewModel : ViewModel() {
 
         // HabitManager.create(habit)
         FirebaseDBManager.create(firebaseUser, habit)
-        _habit.value = observableHabit.value
+        // _habit.value = observableHabit.value
     }
 
     fun updateHabit (id: String, habit: HabitModel) {
