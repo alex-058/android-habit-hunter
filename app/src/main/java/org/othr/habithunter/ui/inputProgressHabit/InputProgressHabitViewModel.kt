@@ -22,7 +22,6 @@ class InputProgressHabitViewModel : ViewModel() {
         _habit.value = HabitModel() // default initialize value of mutable live data
     }
 
-
     fun findHabitById(userid: String, habitId: String) {
         // _habit.value = FirebaseDBManager.findById(userid, habitId, _habit)
         // FirebaseDBManager.findById(userid, habitId, _habit)
@@ -43,19 +42,31 @@ class InputProgressHabitViewModel : ViewModel() {
         return _habit.value!!.habitProgress
     }
 
-    fun createHabitProgress(n: Int) {
+    fun createHabitProgress(userid: String, habitId: String, n: Int) {
         _habit.value?.habitProgress = n
-        // TODO: update of firebase entry needed
+        try {
+            FirebaseDBManager.update(userid, habitId, _habit.value!!)
+            Timber.i("Detail update() Success : ${_habit.value!!}")
+        }
+        catch (e: Exception) {
+            Timber.i("Detail update() Error : ${_habit.value!!}")
+        }
+
     }
 
     fun findhabitGoal () : Int {
-        val test = _habit.value!!.habitGoal
         return _habit.value!!.habitGoal
     }
 
-    fun boostHabitProgress() {
+    fun boostHabitProgress(userid: String, habitId: String) {
         _habit.value!!.habitProgress = _habit.value!!.habitGoal
-        // TODO: update of firebase entry needed
+        try {
+            FirebaseDBManager.update(userid, habitId, _habit.value!!)
+            Timber.i("Detail update() Success : ${_habit.value!!}")
+        }
+        catch (e: Exception) {
+            Timber.i("Detail update() Error : ${_habit.value!!}")
+        }
     }
 
 

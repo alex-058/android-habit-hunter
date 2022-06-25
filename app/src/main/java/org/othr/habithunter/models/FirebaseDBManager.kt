@@ -50,8 +50,6 @@ object FirebaseDBManager : IHabitCrudFirebaseDB {
                 Timber.e("firebase Error getting data $it")
             }
 
-
-
     }
 
     override fun create(firebaseUser: MutableLiveData<FirebaseUser>, habit: HabitModel) {
@@ -77,6 +75,12 @@ object FirebaseDBManager : IHabitCrudFirebaseDB {
     }
 
     override fun update(userid: String, habitId: String, habit: HabitModel) {
-        TODO("Not yet implemented")
+
+        val habitValues = habit.toMap()
+
+        val childUpdate : MutableMap<String, Any?> = HashMap()
+        childUpdate["user-habits/$userid/$habitId"] = habitValues
+
+        database.updateChildren(childUpdate)
     }
 }

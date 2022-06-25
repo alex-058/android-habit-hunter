@@ -65,14 +65,15 @@ class InputProgressHabitFragment : Fragment() {
             }
 
             override fun onStopTrackingTouch(seekBar: CircularSeekBar?) {
-                inputProgressViewModel.createHabitProgress(seekBar!!.progress.toInt())
+                inputProgressViewModel.createHabitProgress(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.habitId,
+                    seekBar!!.progress.toInt())
             }
         })
 
 
         binding.buttonProgressDone.setOnClickListener {
             binding.progressBar.progress = binding.progressBar.max
-            inputProgressViewModel.boostHabitProgress()
+            inputProgressViewModel.boostHabitProgress(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.habitId)
             Toast.makeText(context,"Goal reached!!", Toast.LENGTH_LONG).show()
         }
 
