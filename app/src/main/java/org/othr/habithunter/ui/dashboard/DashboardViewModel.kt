@@ -35,7 +35,15 @@ class DashboardViewModel : ViewModel() {
 
     }
 
-    fun delete(id: String) {
-        HabitManager.delete(id)
+    fun delete(userid: String, id: String) {
+        // HabitManager.delete(id)
+        try {
+            //DonationManager.delete(userid,id)
+            FirebaseDBManager.delete(userid,id)
+            Timber.i("Dashboard Delete Success")
+        }
+        catch (e: Exception) {
+            Timber.i("Dashboard Delete Error : $e.message")
+        }
     }
 }

@@ -12,7 +12,7 @@ object FirebaseDBManager : IHabitCrudFirebaseDB {
     // Updated google-service.json should not need the link in the end
     // var database: DatabaseReference = FirebaseDatabase.getInstance("https://oth-habithunter-default-rtdb.europe-west1.firebasedatabase.app").reference
 
-    var database: DatabaseReference = FirebaseDatabase.getInstance().reference
+    var database: DatabaseReference = FirebaseDatabase.getInstance("https://oth-habithunter-default-rtdb.europe-west1.firebasedatabase.app").reference
 
     override fun findAllByUser(userid: String, habitList: MutableLiveData<List<HabitModel>>) {
         database.child("user-habits").child(userid)
@@ -72,7 +72,11 @@ object FirebaseDBManager : IHabitCrudFirebaseDB {
     }
 
     override fun delete(userid: String, habitId: String) {
-        TODO("Not yet implemented")
+
+        val childDelete : MutableMap<String, Any?> = HashMap()
+        childDelete["/user-habits/$userid/$habitId"] = null
+
+        database.updateChildren(childDelete)
     }
 
     override fun update(userid: String, habitId: String, habit: HabitModel) {
