@@ -81,9 +81,9 @@ class DashboardFragment : Fragment(), HabitClickListener {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 showLoader(loader,"Deleting Habit")
                 val adapter = binding.habitRecyclerView.adapter as HabitAdapter
+                adapter.removeAt(viewHolder.bindingAdapterPosition)
                 // This only needs to be done if we want to delete the habit also from the server / database..,  recycler view does already work with the LIST
                 // dashboardViewModel.delete((viewHolder.itemView.tag as HabitModel).habitId)
-                adapter.removeAt(viewHolder.bindingAdapterPosition)
                 hideLoader(loader)
             }
         }

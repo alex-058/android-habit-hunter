@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -36,7 +37,7 @@ class AddCustomHabitFragment : Fragment() {
     private val binding get() = _binding!!
     private var editMode: Boolean = false
 
-    private lateinit var loggedInViewModel : LoggedInViewModel
+    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
 
     private val args by navArgs<AddCustomHabitFragmentArgs>()
 
@@ -48,8 +49,6 @@ class AddCustomHabitFragment : Fragment() {
         val addCustomHabitViewModel =
             ViewModelProvider(this).get(AddCustomHabitViewModel::class.java)
 
-        loggedInViewModel= ViewModelProvider(this).get(LoggedInViewModel::class.java)
-
         _binding = FragmentAddCustomHabitBinding.inflate(inflater, container, false)
         val root = binding.root
 
@@ -59,7 +58,8 @@ class AddCustomHabitFragment : Fragment() {
         editMode = (args.habitId?.isNullOrEmpty() == false)
 
         if (editMode) {
-            addCustomHabitViewModel.getHabit(args.habitId!!)
+            addCustomHabitViewModel.findHabitById(loggedInViewModel.liveFirebaseUser.value?.uid!!,
+                args.habitId!!)
         }
 
 
@@ -104,7 +104,8 @@ class AddCustomHabitFragment : Fragment() {
             if (editMode) {
                 if ((binding.textHabitName.text?.isNotEmpty()!!) && (binding.numberPickerAmount.value > 0)) {
                     addCustomHabitViewModel.observableHabit.value!!.habitUnit = unit // to store also unit in the habit which is then stored
-                    addCustomHabitViewModel.updateHabit(args.habitId!!, addCustomHabitViewModel.observableHabit.value!!)
+                    addCustomHabitViewModel.updateHabit(loggedInViewModel.liveFirebaseUser.value?.uid!!,
+                        args.habitId!!, addCustomHabitViewModel.observableHabit.value!!)
                     findNavController().navigateUp() // go immediately back
                 }
 

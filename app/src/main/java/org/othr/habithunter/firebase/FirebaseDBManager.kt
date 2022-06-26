@@ -1,10 +1,11 @@
-package org.othr.habithunter.models
+package org.othr.habithunter.firebase
 
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import org.othr.habithunter.models.HabitModel
+import org.othr.habithunter.models.IHabitCrudFirebaseDB
 import timber.log.Timber
-import java.lang.Exception
 
 object FirebaseDBManager : IHabitCrudFirebaseDB {
 

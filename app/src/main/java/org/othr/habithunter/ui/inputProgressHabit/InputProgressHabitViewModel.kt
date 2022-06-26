@@ -1,11 +1,9 @@
 package org.othr.habithunter.ui.inputProgressHabit
 
-import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.othr.habithunter.models.FirebaseDBManager
-import org.othr.habithunter.models.HabitManager
+import org.othr.habithunter.firebase.FirebaseDBManager
 import org.othr.habithunter.models.HabitModel
 import timber.log.Timber
 import java.lang.Exception
