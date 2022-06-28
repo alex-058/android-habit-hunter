@@ -1,5 +1,7 @@
 package org.othr.habithunter.ui.addCustomHabit
 
+import android.app.Activity.RESULT_CANCELED
+import android.app.Activity.RESULT_OK
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -11,6 +13,9 @@ import android.view.ViewGroup
 import android.widget.NumberPicker
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -27,6 +32,9 @@ import org.othr.habithunter.models.HabitIntervall
 import org.othr.habithunter.models.HabitManager
 import org.othr.habithunter.models.HabitModel
 import org.othr.habithunter.ui.profile.LoggedInViewModel
+import org.othr.habithunter.utils.readImageUri
+import org.othr.habithunter.utils.showImagePicker
+import timber.log.Timber
 import java.util.*
 
 
@@ -41,6 +49,8 @@ class AddCustomHabitFragment : Fragment() {
 
     private val args by navArgs<AddCustomHabitFragmentArgs>()
 
+    private lateinit var intentLauncher : ActivityResultLauncher<Intent>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,6 +63,8 @@ class AddCustomHabitFragment : Fragment() {
         val root = binding.root
 
         activity?.actionBar?.title = "Add custom habit"
+
+        registerImagePickerCallback()
 
         // Retrieve state  if args parameter passed
         editMode = (args.habitId?.isNullOrEmpty() == false)
@@ -80,8 +92,11 @@ class AddCustomHabitFragment : Fragment() {
 
         // Icon behaviour
         binding.profileImage.setOnClickListener {
-            Toast.makeText(activity, "Please select an image", Toast.LENGTH_LONG)
+            /*Toast.makeText(activity, "Please select an image", Toast.LENGTH_LONG)
                 .show()
+
+             */
+            showImagePicker(intentLauncher)
         }
 
         // Time Options Picker setup
@@ -177,6 +192,29 @@ class AddCustomHabitFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+    }
+
+    private fun registerImagePickerCallback() {
+        intentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            Timber.i("DX registerPickerCallback() ${readImageUri(result.resultCode, result.data).toString()}")
+                            /*
+                            FirebaseImageManager
+                                .updateUserImage(loggedInViewModel.liveFirebaseUser.value!!.uid,
+                                    readImageUri(result.resultCode, result.data),
+                                    // TODO: Do something with image
+                                    navHeaderBinding.navHeaderImage,
+                                    true)
+                             */
+                            Toast.makeText(context, "Image gathered: " + result.data, Toast.LENGTH_LONG).show()
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
 
 
