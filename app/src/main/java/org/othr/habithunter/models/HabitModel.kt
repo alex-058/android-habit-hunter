@@ -10,8 +10,8 @@ import java.net.URI
 data class HabitModel(
     var uid: String = "N/A",
     var email: String? = "N/A",
-    var habitTitle: String = "N/A",
-    var habitImage: Uri = Uri.EMPTY,
+    var habitTitle: String = "",
+    var habitImage: String = "",
     var habitGoal: Int = 0,
     var habitProgress: Int = 0,
     var habitIntervall: HabitIntervall = HabitIntervall.MONTHLY,
@@ -27,7 +27,8 @@ data class HabitModel(
             "habitProgress" to habitProgress,
             "habitIntervall" to habitIntervall,
             "habitUnit" to habitUnit,
-            "email" to email
+            "email" to email,
+            "habitImage" to habitImage
         )
     }
 }

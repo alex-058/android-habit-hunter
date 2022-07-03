@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -39,13 +39,14 @@
             android:lines="1"
             android:text="@{habit.habitTitle}"
             android:textAppearance="?attr/textAppearanceHeadline4"
-            android:textSize="30sp"
+            android:textSize="25sp"
+            android:maxLength="20"
             cardView:layout_constraintBottom_toBottomOf="parent"
             cardView:layout_constraintRight_toRightOf="parent"
             cardView:layout_constraintStart_toEndOf="@+id/image"
             cardView:layout_constraintTop_toTopOf="parent"
-            cardView:layout_constraintVertical_bias="0.0"
-            tools:text="Habit Title" />
+            cardView:layout_constraintVertical_bias="0.120000005"
+            tools:text="Cycling 10 minutes" />
 
         <TextView
             android:id="@+id/habitIntervall"
@@ -74,7 +75,7 @@
             android:max="@{habit.habitGoal}"
             android:progress="@{habit.habitProgress}"
             android:progressDrawable="@drawable/circle"
-            cardView:layout_constraintHorizontal_bias="0.88"
+            cardView:layout_constraintHorizontal_bias="1.0"
             cardView:layout_constraintLeft_toRightOf="@id/image"
             cardView:layout_constraintRight_toRightOf="parent"
             cardView:layout_constraintTop_toTopOf="parent"

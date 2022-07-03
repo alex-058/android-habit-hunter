@@ -1,8 +1,14 @@
 package org.othr.habithunter.firebase
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import org.othr.habithunter.models.HabitModel
 import org.othr.habithunter.models.IHabitCrudFirebaseDB
 import timber.log.Timber
@@ -62,6 +68,7 @@ object FirebaseDBManager : IHabitCrudFirebaseDB {
         }
 
         habit.uid = key
+
         val habitValues = habit.toMap()
 
         val childAdd = HashMap<String, Any>()
@@ -87,5 +94,39 @@ object FirebaseDBManager : IHabitCrudFirebaseDB {
         childUpdate["user-habits/$userid/$habitId"] = habitValues
 
         database.updateChildren(childUpdate)
+    }
+
+    fun getImageUrl (userid: String, habitId: String, imageView: ImageView) {
+        var url: String?
+        database.child("user-habits").child(userid)
+            .child(habitId).get().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    url = it.result.getValue(HabitModel::class.java)?.habitImage!!
+                    Picasso.get().load(url)
+                        .resize(200, 200)
+                        .centerCrop()
+                        .into(object : Target {
+                            override fun onBitmapLoaded(bitmap: Bitmap?,
+                                                        from: Picasso.LoadedFrom?
+                            ) {
+                                Timber.i("DX onBitmapLoaded $bitmap")
+                                imageView.setImageBitmap(bitmap)
+                            }
+
+                            override fun onBitmapFailed(e: java.lang.Exception?,
+                                                        errorDrawable: Drawable?) {
+                                Timber.i("DX onBitmapFailed $e")
+                            }
+
+                            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
+                        })
+                }
+                else {
+                    Timber.e("firebase Error getting data ${it.result.getValue()}")
+                }
+            }.addOnFailureListener{
+                Timber.e("firebase Error getting data $it")
+            }
+
     }
 }

@@ -2,7 +2,9 @@ package org.othr.habithunter.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import org.othr.habithunter.R
 import org.othr.habithunter.databinding.CardviewHabitsBinding
 import org.othr.habithunter.models.HabitModel
@@ -40,9 +42,13 @@ class HabitAdapter constructor(private var habits: ArrayList<HabitModel>,
         fun bind(habit: HabitModel, listener: HabitClickListener) {
             binding.root.tag = habit
             binding.habit = habit
-            binding.image.setImageResource(R.mipmap.ic_launcher_round)
             binding.root.setOnClickListener { listener.onHabitClick(habit) }
             binding.executePendingBindings()
+            Picasso.get().load(habit.habitImage.toUri())
+                .resize(200, 200)
+                .centerCrop()
+                .into(binding.image)
+
         }
     }
 }

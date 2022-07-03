@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -25,12 +26,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import org.othr.habithunter.R
 import org.othr.habithunter.alarm.AlarmReceiver
 import org.othr.habithunter.databinding.FragmentAddCustomHabitBinding
+import org.othr.habithunter.firebase.FirebaseDBManager
+import org.othr.habithunter.firebase.FirebaseImageManager
 import org.othr.habithunter.models.HabitIntervall
 import org.othr.habithunter.models.HabitManager
 import org.othr.habithunter.models.HabitModel
+import org.othr.habithunter.ui.inputProgressHabit.InputProgressHabitViewModel
 import org.othr.habithunter.ui.profile.LoggedInViewModel
 import org.othr.habithunter.utils.readImageUri
 import org.othr.habithunter.utils.showImagePicker
@@ -72,6 +77,12 @@ class AddCustomHabitFragment : Fragment() {
         if (editMode) {
             addCustomHabitViewModel.findHabitById(loggedInViewModel.liveFirebaseUser.value?.uid!!,
                 args.habitId!!)
+            // TODO: Problem is async firebase call on findHabitById
+            binding.textAddIcon.setText("Edit icon")
+            binding.addCustomHabitBttn.setText("Update habit")
+            // Display image in image view
+            addCustomHabitViewModel.displayImage(loggedInViewModel.liveFirebaseUser.value?.uid!!,
+            args.habitId!!, binding.profileImage)
         }
 
 
@@ -190,10 +201,6 @@ class AddCustomHabitFragment : Fragment() {
         _binding = null
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
     private fun registerImagePickerCallback() {
         intentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -201,14 +208,12 @@ class AddCustomHabitFragment : Fragment() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             Timber.i("DX registerPickerCallback() ${readImageUri(result.resultCode, result.data).toString()}")
-                            /*
+                            // TODO: Do something with image -> upload firebase, place in image view
                             FirebaseImageManager
-                                .updateUserImage(loggedInViewModel.liveFirebaseUser.value!!.uid,
+                                .updateHabitImage(FirebaseDBManager.database.push().key!!, // generate new key for image
                                     readImageUri(result.resultCode, result.data),
-                                    // TODO: Do something with image
-                                    navHeaderBinding.navHeaderImage,
+                                    binding.profileImage,
                                     true)
-                             */
                             Toast.makeText(context, "Image gathered: " + result.data, Toast.LENGTH_LONG).show()
                         } // end of if
                     }

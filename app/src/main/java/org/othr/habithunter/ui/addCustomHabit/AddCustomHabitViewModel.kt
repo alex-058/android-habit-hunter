@@ -1,11 +1,13 @@
 package org.othr.habithunter.ui.addCustomHabit
 
+import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseUser
 import org.othr.habithunter.R
 import org.othr.habithunter.firebase.FirebaseDBManager
+import org.othr.habithunter.firebase.FirebaseImageManager
 import org.othr.habithunter.models.HabitIntervall
 import org.othr.habithunter.models.HabitModel
 import timber.log.Timber
@@ -27,7 +29,6 @@ class AddCustomHabitViewModel : ViewModel() {
         _habit.value = HabitModel() // default initialize value of mutable live data
     }
 
-
     fun findHabitById(userid: String, habitId: String) {
         try {
             //DonationManager.findById(email, id, donation)
@@ -37,10 +38,13 @@ class AddCustomHabitViewModel : ViewModel() {
         }
         catch (e: Exception) {
             Timber.i("Detail getHabitById() Error : $e.message")
+            observableHabit.value?.uid?.isBlank()
         }
     }
 
     fun addHabit(firebaseUser: MutableLiveData<FirebaseUser>, habit: HabitModel) {
+
+        habit.habitImage = FirebaseImageManager.imageUri.value.toString()
 
         when(observableRadioIntervallChecked.value) {
             R.id.radioButtonDaily -> habit.habitIntervall = HabitIntervall.DAILY // here is the operation on the model
@@ -55,6 +59,8 @@ class AddCustomHabitViewModel : ViewModel() {
 
     fun updateHabit (uid: String, id: String, habit: HabitModel) {
 
+        habit.habitImage = FirebaseImageManager.imageUri.value.toString()
+
         when(observableRadioIntervallChecked.value) {
             R.id.radioButtonDaily -> habit.habitIntervall = HabitIntervall.DAILY // here is the operation on the model
             R.id.radioButtonWeekly -> habit.habitIntervall = HabitIntervall.WEEKLY
@@ -63,6 +69,10 @@ class AddCustomHabitViewModel : ViewModel() {
 
         // HabitManager.update(id, habit)
         FirebaseDBManager.update(uid, id, habit)
+    }
+
+    fun displayImage (userid: String, habitId: String, imageView: ImageView) {
+        FirebaseDBManager.getImageUrl(userid, habitId, imageView)
     }
 
 
