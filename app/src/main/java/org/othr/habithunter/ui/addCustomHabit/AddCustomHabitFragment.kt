@@ -37,6 +37,7 @@ import org.othr.habithunter.models.HabitManager
 import org.othr.habithunter.models.HabitModel
 import org.othr.habithunter.ui.inputProgressHabit.InputProgressHabitViewModel
 import org.othr.habithunter.ui.profile.LoggedInViewModel
+import org.othr.habithunter.utils.hideLoader
 import org.othr.habithunter.utils.readImageUri
 import org.othr.habithunter.utils.showImagePicker
 import timber.log.Timber
@@ -165,33 +166,34 @@ class AddCustomHabitFragment : Fragment() {
         binding.numberPickerAmount.minValue
         binding.numberPickerAmount.maxValue = 300000;
 
-        // TODO: Does this align with MVVM principles?
-        // Correctly present values when in edit-mode
-        if (editMode) {
-            when (addCustomHabitViewModel.observableHabit.value!!.habitIntervall) {
-                HabitIntervall.DAILY -> addCustomHabitViewModel.observableRadioIntervallChecked.value = binding.radioButtonDaily.id
-                HabitIntervall.WEEKLY -> addCustomHabitViewModel.observableRadioIntervallChecked.value = binding.radioButtonWeekly.id
-                HabitIntervall.MONTHLY ->  addCustomHabitViewModel.observableRadioIntervallChecked.value = binding.radioButtonMonthly.id
-            }
+        // Lessons Learned: Observe method gets triggered if async callback comes back
+        addCustomHabitViewModel.observableHabit.observe(viewLifecycleOwner, Observer {
+            // Correctly present values when in edit-mode
+            if (editMode) {
+                when (addCustomHabitViewModel.observableHabit.value!!.habitIntervall) {
+                    HabitIntervall.DAILY -> addCustomHabitViewModel.observableRadioIntervallChecked.value = binding.radioButtonDaily.id
+                    HabitIntervall.WEEKLY -> addCustomHabitViewModel.observableRadioIntervallChecked.value = binding.radioButtonWeekly.id
+                    HabitIntervall.MONTHLY ->  addCustomHabitViewModel.observableRadioIntervallChecked.value = binding.radioButtonMonthly.id
+                }
 
-            // TODO: Goal is to take habit unit from observable habit and display it to the user
-            when (addCustomHabitViewModel.observableHabit.value!!.habitUnit) {
-                "amount" -> addCustomHabitViewModel.observableRadioAmountChecked.value = binding.radioButtonAmount.id
+                when (addCustomHabitViewModel.observableHabit.value!!.habitUnit) {
+                    "amount" -> addCustomHabitViewModel.observableRadioAmountChecked.value = binding.radioButtonAmount.id
 
-                "seconds" ->  {
-                    addCustomHabitViewModel.observableRadioAmountChecked.value = binding.radioButtonTime.id
-                    binding.numberPickerTime.value = resources.getStringArray(R.array.timeOptions).indexOf("seconds")
-                }
-                "minutes" ->  {
-                    addCustomHabitViewModel.observableRadioAmountChecked.value = binding.radioButtonTime.id
-                    binding.numberPickerTime.value = resources.getStringArray(R.array.timeOptions).indexOf("minutes")
-                }
-                "hours" ->  {
-                    addCustomHabitViewModel.observableRadioAmountChecked.value = binding.radioButtonTime.id
-                    binding.numberPickerTime.value = resources.getStringArray(R.array.timeOptions).indexOf("hours")
+                    "seconds" ->  {
+                        addCustomHabitViewModel.observableRadioAmountChecked.value = binding.radioButtonTime.id
+                        binding.numberPickerTime.value = resources.getStringArray(R.array.timeOptions).indexOf("seconds")
+                    }
+                    "minutes" ->  {
+                        addCustomHabitViewModel.observableRadioAmountChecked.value = binding.radioButtonTime.id
+                        binding.numberPickerTime.value = resources.getStringArray(R.array.timeOptions).indexOf("minutes")
+                    }
+                    "hours" ->  {
+                        addCustomHabitViewModel.observableRadioAmountChecked.value = binding.radioButtonTime.id
+                        binding.numberPickerTime.value = resources.getStringArray(R.array.timeOptions).indexOf("hours")
+                    }
                 }
             }
-        }
+        })
 
         return root
     }

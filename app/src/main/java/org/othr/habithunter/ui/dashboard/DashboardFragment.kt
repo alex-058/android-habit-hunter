@@ -117,7 +117,6 @@ class DashboardFragment : Fragment(), HabitClickListener {
 
         loggedInViewModel.liveFirebaseUser.observe(this, Observer { firebaseUser ->
             if (firebaseUser != null)
-                // TODO: check this out#
                     dashboardViewModel.liveFirebaseUser.value = firebaseUser
                     dashboardViewModel.load() // syncs the list
                 Toast.makeText(context, "User already logged-in", Toast.LENGTH_SHORT).show()
@@ -151,10 +150,10 @@ class DashboardFragment : Fragment(), HabitClickListener {
         binding.habitRecyclerView.adapter = HabitAdapter(habitList,this)
         if (habitList.isEmpty()) {
             binding.habitRecyclerView.visibility = View.GONE
-            // fragBinding.habitsNotFound.visibility = View.VISIBLE
+            binding.habitsNotFound.visibility = View.VISIBLE
         } else {
             binding.habitRecyclerView.visibility = View.VISIBLE
-            // fragBinding.habitsNotFound.visibility = View.GONE
+            binding.habitsNotFound.visibility = View.GONE
         }
     }
 
