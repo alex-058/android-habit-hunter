@@ -25,6 +25,7 @@ import org.othr.habithunter.models.HabitModel
 import org.othr.habithunter.adapters.HabitAdapter
 import org.othr.habithunter.adapters.HabitClickListener
 import org.othr.habithunter.alarm.AlarmReceiver
+import org.othr.habithunter.firebase.FirebaseDBManager
 import org.othr.habithunter.ui.profile.LoggedInViewModel
 import org.othr.habithunter.utils.*
 import java.util.*
@@ -192,10 +193,15 @@ class DashboardFragment : Fragment(), HabitClickListener {
             // alarmMgr!!.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
             //     AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntent);
 
-            // Set repeating alarm manager
+            // Set repeating alarm manager - WORKS
             alarmMgr!!.setRepeating(
-                AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+              AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, alarmIntent); // repeat alarm in one day cyclus
+
+            /*
+            alarmMgr!!.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntent);
+                */
 
             Toast.makeText(context, "Alarm has been initialized!", Toast.LENGTH_LONG).show()
         }

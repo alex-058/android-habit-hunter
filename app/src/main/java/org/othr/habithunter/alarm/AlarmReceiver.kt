@@ -3,6 +3,7 @@ package org.othr.habithunter.alarm
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import org.othr.habithunter.firebase.FirebaseDBManager
 import org.othr.habithunter.models.HabitManager
 import java.util.*
 
@@ -17,7 +18,8 @@ class AlarmReceiver : BroadcastReceiver() {
         val isFirstOfWeek = isFirstDayofWeek(cal)
         val isFirstOfMonth = isFirstDayofMonth(cal)
 
-        HabitManager.resetHabits(isFirstOfWeek, isFirstOfMonth)
+        // HabitManager.resetHabits(isFirstOfWeek, isFirstOfMonth)
+        FirebaseDBManager.resetHabitProgress(isFirstOfWeek, isFirstOfMonth)
 
     }
 

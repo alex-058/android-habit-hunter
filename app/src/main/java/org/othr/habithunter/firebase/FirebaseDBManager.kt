@@ -2,6 +2,7 @@ package org.othr.habithunter.firebase
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.renderscript.Sampler
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
@@ -9,9 +10,11 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
+import org.othr.habithunter.models.HabitIntervall
 import org.othr.habithunter.models.HabitModel
 import org.othr.habithunter.models.IHabitCrudFirebaseDB
 import timber.log.Timber
+import java.time.DayOfWeek
 
 object FirebaseDBManager : IHabitCrudFirebaseDB {
 
@@ -128,5 +131,73 @@ object FirebaseDBManager : IHabitCrudFirebaseDB {
                 Timber.e("firebase Error getting data $it")
             }
 
+    }
+
+    fun resetHabitProgress (firstOfWeek: Boolean, firstOfMonth: Boolean) {
+
+        database.child("user-habits").addListenerForSingleValueEvent( object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                // iterate through users
+                snapshot.children.forEach {
+                    val user = it.key
+                    // iterate through habits
+                    it.children.forEach {
+                        // here we have access to all the habits
+                        // 1. retrieve habit 2. alter progress (if valid) 3. rewrite firebase entry (map) to database
+                        var habitId = it.key
+                        val habit = it.getValue(HabitModel::class.java)
+                        val habitValues = habit!!.toMap()
+                        val mutableHabitValues = habitValues.toMutableMap()
+
+                        when(habit.habitIntervall) {
+
+                            HabitIntervall.WEEKLY ->
+                            {
+                                if (firstOfWeek) {
+                                    mutableHabitValues.set("habitProgress", 0)
+                                    val childAdd = HashMap<String, Any>()
+                                    childAdd["/user-habits/$user/$habitId"] = mutableHabitValues // "save" habit for user
+                                    database.updateChildren(childAdd)
+                                }
+                            }
+
+                            HabitIntervall.DAILY -> { // always reset daily habit, alarm is triggered at midnight
+                                mutableHabitValues.set("habitProgress", 0)
+                                val childAdd = HashMap<String, Any>()
+                                childAdd["/user-habits/$user/$habitId"] = mutableHabitValues // "save" habit for user
+                                database.updateChildren(childAdd)
+                            }
+                            HabitIntervall.MONTHLY ->
+                            {
+                                if (firstOfMonth) {
+                                    mutableHabitValues.set("habitProgress", 0)
+                                    val childAdd = HashMap<String, Any>()
+                                    childAdd["/user-habits/$user/$habitId"] = mutableHabitValues // "save" habit for user
+                                    database.updateChildren(childAdd)
+                                }
+                            }
+                        }
+
+                        /* first test with resetting the habits
+                        mutableHabitValues.set("habitProgress", 0);
+                        // no mutable map -> values cannot be altered
+                        // Do firebase update wit (altered values)
+                        if (habit.habitTitle == "Snorchling") {
+                            val childAdd = HashMap<String, Any>()
+                            childAdd["/user-habits/$user/$habitId"] = mutableHabitValues // "save" habit for user
+                            database.updateChildren(childAdd) // forgot this
+                        }
+
+                         */
+
+
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Timber.i("Firebase Habit error : ${error.message}")
+            }
+        })
     }
 }
