@@ -26,4 +26,6 @@ the technical report for my assignment will follow here
 * Custom circular progress bar to track habit progress for enhanced user experience
 * Data binding (one and two way) in views
 
+> The **technical report** can be retrieved in the wiki section of this github repository!
+
 @2022, Alexaneer Wastl
