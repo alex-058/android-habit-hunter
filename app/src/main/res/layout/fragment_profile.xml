@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:contentDescription="Image"
+            android:contentDescription="@string/description_image"
             app:srcCompat="@drawable/just_do_it_banner" />
     </FrameLayout>
 
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:textAppearance="?attr/textAppearanceHeadline4"
-        android:text="Login"
+        android:text="@string/text_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header_auth_image" />
@@ -48,9 +48,11 @@
         <EditText
             android:id="@+id/emailFieldText"
             android:layout_width="match_parent"
+            android:imeOptions="flagNoExtractUi"
+            android:inputType="textEmailAddress"
             android:layout_height="wrap_content"
             android:textAppearance="?attr/textAppearanceButton"
-            android:hint="Email" />
+            android:hint="@string/hint_text_email" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -70,14 +72,14 @@
             android:inputType="textPassword"
             android:textAppearance="?attr/textAppearanceButton"
             android:layout_height="wrap_content"
-            android:hint="Password" />
+            android:hint="@string/hint_text_password" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/registerButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="@string/bttn_register"
         android:gravity="center"
         android:textAppearance="?attr/textAppearanceButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,7 +100,7 @@
         android:textAppearance="?attr/textAppearanceButton"
         android:backgroundTint="@color/teal_700"
         android:gravity="center"
-        android:text="Login"
+        android:text="@string/bttn_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/passwordField" />

@@ -29,6 +29,14 @@
     <string name="text_plus_5">+5</string>
     <string name="messageLoading">Please wait - Your habits are loading..</string>
     <string name="habitsNotFound">"No habits to display.. Start your habit journey right now :) "</string>
+    <string name="bttn_add_habit">Add habit</string>
+    <string name="bttn_log_out">Log Out</string>
+    <string name="description_image">Image</string>
+    <string name="text_login">Login</string>
+    <string name="hint_text_email">Email</string>
+    <string name="hint_text_password">Password</string>
+    <string name="bttn_register">Register</string>
+    <string name="bttn_login">Login</string>
 
     <string-array name="timeOptions">
         <item>seconds</item>

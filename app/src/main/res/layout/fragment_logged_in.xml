@@ -24,7 +24,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="332dp"
-        android:text="Log Out"
+        android:text="@string/bttn_log_out"
         android:textAppearance="?attr/textAppearanceButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

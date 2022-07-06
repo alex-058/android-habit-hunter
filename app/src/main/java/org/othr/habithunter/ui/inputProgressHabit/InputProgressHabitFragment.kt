@@ -7,12 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import me.tankery.lib.circularseekbar.CircularSeekBar
-import org.othr.habithunter.R
 import org.othr.habithunter.databinding.FragmentInputProgressHabitBinding
 import org.othr.habithunter.ui.profile.LoggedInViewModel
 
@@ -61,7 +59,6 @@ class InputProgressHabitFragment : Fragment() {
             }
 
             override fun onStartTrackingTouch(seekBar: CircularSeekBar?) {
-                Toast.makeText(context, "Start Gaining", Toast.LENGTH_SHORT).show()
             }
 
             override fun onStopTrackingTouch(seekBar: CircularSeekBar?) {
@@ -74,7 +71,7 @@ class InputProgressHabitFragment : Fragment() {
         binding.buttonProgressDone.setOnClickListener {
             binding.progressBar.progress = binding.progressBar.max
             inputProgressViewModel.boostHabitProgress(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.habitId)
-            Toast.makeText(context,"Goal reached!!", Toast.LENGTH_LONG).show()
+            Toast.makeText(context,"Goal reached - Congrats!!", Toast.LENGTH_LONG).show()
         }
 
 
@@ -85,7 +82,6 @@ class InputProgressHabitFragment : Fragment() {
         binding.habitvm = inputProgressViewModel
         binding.progressBar.progress = inputProgressViewModel.findHabitProgress().toFloat()
         binding.progressBar.max = inputProgressViewModel.findhabitGoal().toFloat()
-        Toast.makeText(context, "Render function triggered", Toast.LENGTH_SHORT).show()
     }
 
 

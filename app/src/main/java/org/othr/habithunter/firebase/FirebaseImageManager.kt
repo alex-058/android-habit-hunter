@@ -70,10 +70,4 @@ object FirebaseImageManager {
             })
     }
 
-    fun showImageinView (habitid: String, imageView: ImageView) {
-        // Retrieve url from
-        // Get image and display it in the imageView
-
-    }
-
 }

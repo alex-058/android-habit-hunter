@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseUser
 import org.othr.habithunter.firebase.FirebaseDBManager
-import org.othr.habithunter.models.HabitManager
 import org.othr.habithunter.models.HabitModel
 import timber.log.Timber
 import java.lang.Exception

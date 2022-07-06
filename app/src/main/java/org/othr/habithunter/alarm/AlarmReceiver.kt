@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import org.othr.habithunter.firebase.FirebaseDBManager
-import org.othr.habithunter.models.HabitManager
 import java.util.*
 
 

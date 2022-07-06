@@ -3,7 +3,6 @@ package org.othr.habithunter.ui.profile
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseUser
 import org.othr.habithunter.firebase.FirebaseAuthManager
 

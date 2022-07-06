@@ -2,22 +2,13 @@ package org.othr.habithunter.ui.addCustomHabit
 
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.NumberPicker
-import android.widget.RadioButton
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toUri
-import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -26,22 +17,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
-import com.squareup.picasso.Picasso
 import org.othr.habithunter.R
-import org.othr.habithunter.alarm.AlarmReceiver
 import org.othr.habithunter.databinding.FragmentAddCustomHabitBinding
 import org.othr.habithunter.firebase.FirebaseDBManager
 import org.othr.habithunter.firebase.FirebaseImageManager
 import org.othr.habithunter.models.HabitIntervall
-import org.othr.habithunter.models.HabitManager
 import org.othr.habithunter.models.HabitModel
-import org.othr.habithunter.ui.inputProgressHabit.InputProgressHabitViewModel
 import org.othr.habithunter.ui.profile.LoggedInViewModel
-import org.othr.habithunter.utils.hideLoader
 import org.othr.habithunter.utils.readImageUri
 import org.othr.habithunter.utils.showImagePicker
 import timber.log.Timber
-import java.util.*
 
 
 class AddCustomHabitFragment : Fragment() {
@@ -91,10 +76,6 @@ class AddCustomHabitFragment : Fragment() {
         binding.viewmodel = addCustomHabitViewModel
         binding.lifecycleOwner = this
 
-        addCustomHabitViewModel.observableRadioIntervallChecked.observe (viewLifecycleOwner, Observer {
-            checked -> Toast.makeText(context, checked.toString(), Toast.LENGTH_SHORT).show()
-        })
-
         addCustomHabitViewModel.observableRadioAmountChecked.observe(viewLifecycleOwner, Observer {
             checked -> when (checked) {
                 R.id.radioButtonTime -> binding.numberPickerTime.isVisible = true
@@ -104,10 +85,6 @@ class AddCustomHabitFragment : Fragment() {
 
         // Icon behaviour
         binding.profileImage.setOnClickListener {
-            /*Toast.makeText(activity, "Please select an image", Toast.LENGTH_LONG)
-                .show()
-
-             */
             showImagePicker(intentLauncher)
         }
 
@@ -154,13 +131,6 @@ class AddCustomHabitFragment : Fragment() {
 
 
         }
-
-        // Dealing with keyboard focus -> does not work yet
-        /*binding.textHabitName.setOnFocusChangeListener(OnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                hideSoftKeyboard(v)
-            }
-        }) */
 
         // Amount Number Picker setup
         binding.numberPickerAmount.minValue
@@ -216,7 +186,6 @@ class AddCustomHabitFragment : Fragment() {
                                     readImageUri(result.resultCode, result.data),
                                     binding.profileImage,
                                     true)
-                            Toast.makeText(context, "Image gathered: " + result.data, Toast.LENGTH_LONG).show()
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }

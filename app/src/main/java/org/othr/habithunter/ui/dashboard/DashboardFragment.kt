@@ -9,8 +9,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -28,6 +26,7 @@ import org.othr.habithunter.alarm.AlarmReceiver
 import org.othr.habithunter.firebase.FirebaseDBManager
 import org.othr.habithunter.ui.profile.LoggedInViewModel
 import org.othr.habithunter.utils.*
+import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -120,7 +119,6 @@ class DashboardFragment : Fragment(), HabitClickListener {
             if (firebaseUser != null)
                     dashboardViewModel.liveFirebaseUser.value = firebaseUser
                     dashboardViewModel.load() // syncs the list
-                Toast.makeText(context, "User already logged-in", Toast.LENGTH_SHORT).show()
         })
 
         loggedInViewModel.loggedOut.observe(this, Observer { loggedout ->
@@ -159,10 +157,6 @@ class DashboardFragment : Fragment(), HabitClickListener {
     }
 
     override fun onHabitClick(habit: HabitModel) {
-        // event handling for clicking a habit in recycler view
-        // Toast.makeText(activity, "You just clicked the habit: " + habit.habitTitle + habit.habitId, Toast.LENGTH_LONG)
-        // .show()
-        // findNavController().navigate(R.id.action_navigation_dashboard_to_inputProgressHabit)
 
         val action = DashboardFragmentDirections.actionNavigationDashboardToInputProgressHabit(habit.uid)
         findNavController().navigate(action)
@@ -203,7 +197,7 @@ class DashboardFragment : Fragment(), HabitClickListener {
                 AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntent);
                 */
 
-            Toast.makeText(context, "Alarm has been initialized!", Toast.LENGTH_LONG).show()
+            Timber.i("Alarm has been initialized")
         }
 
     }

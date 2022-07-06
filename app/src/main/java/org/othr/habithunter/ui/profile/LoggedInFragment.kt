@@ -6,13 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.othr.habithunter.R
 import org.othr.habithunter.databinding.FragmentLoggedInBinding
-import org.othr.habithunter.databinding.FragmentProfileBinding
-import org.othr.habithunter.ui.dashboard.DashboardViewModel
 
 class LoggedInFragment : Fragment() {
 
@@ -55,7 +52,6 @@ class LoggedInFragment : Fragment() {
 
         loggedInViewModel.loggedOut.observe(viewLifecycleOwner, Observer { loggedOut ->
             if (loggedOut) {
-                Toast.makeText(getContext(), "User Logged Out", Toast.LENGTH_SHORT).show();
                 findNavController().navigate(R.id.action_loggedInFragment_to_navigation_profile) }
         })
 

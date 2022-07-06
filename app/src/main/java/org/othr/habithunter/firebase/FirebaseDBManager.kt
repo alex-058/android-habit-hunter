@@ -178,18 +178,6 @@ object FirebaseDBManager : IHabitCrudFirebaseDB {
                             }
                         }
 
-                        /* first test with resetting the habits
-                        mutableHabitValues.set("habitProgress", 0);
-                        // no mutable map -> values cannot be altered
-                        // Do firebase update wit (altered values)
-                        if (habit.habitTitle == "Snorchling") {
-                            val childAdd = HashMap<String, Any>()
-                            childAdd["/user-habits/$user/$habitId"] = mutableHabitValues // "save" habit for user
-                            database.updateChildren(childAdd) // forgot this
-                        }
-
-                         */
-
 
                     }
                 }
