@@ -26,17 +26,4 @@ the technical report for my assignment will follow here
 * Custom circular progress bar to track habit progress for enhanced user experience
 * Data binding (one and two way) in views
 
-
-
-## Technical Report
-
-### 3rd party / Google APIs
-
-In the app there are some 3rd party libraries used which will be further explained here:
-
-* 
-
-
-
-
-
+@2022, Alexaneer Wastl
