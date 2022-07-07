@@ -10,7 +10,7 @@ My app HabitHunter will help to first of all create habits, then insert progress
 automatically reset their progress daily, weekly or monthly. 
 
 To get a better understanding, not only about all the features, but from a more technical perspective 
-the technical report for my assignment will follow here
+a **technical report** is provided in the **wiki section** of this github project.
 
 ## Core Feature Overview
 
@@ -28,4 +28,4 @@ the technical report for my assignment will follow here
 
 > The **technical report** can be retrieved in the wiki section of this github repository!
 
-@2022, Alexaneer Wastl
+@2022, Alexander Wastl
