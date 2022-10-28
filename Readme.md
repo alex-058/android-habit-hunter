@@ -2,7 +2,6 @@
 
 ## Welcome to the world of habits!
 
-This is my assignment for the Advanced App Programming course with Kotlin lectured by Dave Drohan. 
 Building solid and everlasting habits is a difficult undertaking. 
 But the solution is not far away. 
 
