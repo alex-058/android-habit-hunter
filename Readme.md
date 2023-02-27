@@ -1,5 +1,9 @@
 # Habit Hunter
 
+## Preview
+
+<img src="https://github.com/alex-058/android-habit-hunter/blob/master/HabitHunter.gif" width="300" height="600">
+
 ## Welcome to the world of habits!
 
 Building solid and everlasting habits is a difficult undertaking. 
