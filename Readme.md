@@ -8,9 +8,6 @@ But the solution is not far away.
 My app HabitHunter will help to first of all create habits, then insert progress on each habit and the app
 automatically reset their progress daily, weekly or monthly. 
 
-To get a better understanding, not only about all the features, but from a more technical perspective 
-a **technical report** is provided in the **wiki section** of this github project.
-
 ## Core Feature Overview
 
 * Adding, Editing (Swipe-to-edit) and Deleting (Swipe-to-delete) habits 
